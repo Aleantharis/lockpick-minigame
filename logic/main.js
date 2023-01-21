@@ -168,7 +168,7 @@ function handleMouseMove(event) {
 
 	pickAngle = alphaDeg;
 	if (DEBUG) {
-		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg);
+		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle;
 	}
 	else {
 		document.getElementById("testOut").value = "";
