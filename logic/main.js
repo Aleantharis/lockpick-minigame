@@ -2,7 +2,7 @@ const canvasHeightMargin = 30;
 const lockRotationSpeed = 0.5;
 const maxPickHealth = 110;
 const minTolerance = 5;
-var vicTolerance = 0.1;
+const vicTolerance = 0.25;
 const minRotation = 2;
 const goalRotation = 90;
 
