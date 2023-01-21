@@ -75,7 +75,7 @@ function startGame(event) {
 
 
 
-document.onmousemove = handleMouseMove;
+//document.onmousemove = handleMouseMove;
 draw();
 
 
