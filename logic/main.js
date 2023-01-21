@@ -242,19 +242,26 @@ function failure() {
 	alert("Lockpick broke!");
 }
 
-function stopGame(event) {
+function stopGameHandler(event) {
 	event.preventDefault();
+	stopGame();
+}
+
+function startGameHandler(event) {
+	event.preventDefault();
+	startGame();
+}
+
+function stopGame() {
 	clearInterval(gameLoop);
 	document.getElementById("sDiff").disabled = false;
 	document.getElementById("btnStart").value = "Start";
-	document.getElementById("fMenu").onsubmit = startGame;
+	document.getElementById("fMenu").onsubmit = startGameHandler;
 }
 
-function startGame(event) {
-	event.preventDefault();
+function startGame() {
 	console.log("difficulty: " + difficulty);
 
-	// TODO setup new game (difficulty setting, randomize target etc.)
 	lockRotation = 0.0;
 	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
@@ -265,13 +272,8 @@ function startGame(event) {
 
 	document.getElementById("sDiff").disabled = true;
 	document.getElementById("btnStart").value = "Stop";
-	document.getElementById("fMenu").onsubmit = stopGame;
+	document.getElementById("fMenu").onsubmit = stopGameHandler;
 }
 
-
-
 document.onmousemove = handleMouseMove;
-drawCross();
-
-
 document.getElementById("fMenu").onsubmit = startGame;
