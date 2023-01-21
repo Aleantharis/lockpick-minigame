@@ -6,7 +6,7 @@ resize_canvas();
 // Attempt at auto-resize
 function resize_canvas(){
     canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight - document.getElementById("fMenu").offsetHeight;
+    canvas.height = window.innerHeight - (document.getElementById("fMenu").offsetHeight + 30);
 }
 window.addEventListener("resize", resize_canvas);
 window.addEventListener("orientationchange", resize_canvas);
