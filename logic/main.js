@@ -5,6 +5,12 @@ const minTolerance = 5;
 const vicTolerance = 0.25;
 const minRotation = 2;
 const goalRotation = 90;
+const lockBody = new Image();
+lockBody.src = "img/lock-body.png";
+const lockCore = new Image();
+lockCore.src = "img/lock-core.png";
+const lockPick = new Image();
+lockPick.src = "img/lockpick.png";
 
 var DEBUG = false;
 var canvas = document.getElementById("cvGame");
@@ -75,34 +81,54 @@ function clearCanvas() {
 
 function drawDial() {
 	ctx.beginPath();
-	ctx.fillStyle = "Black";
-	ctx.arc(0, 0, ((canvas.height / 2) * 0.8), 0, Math.PI * 2, false);
-	ctx.fill();
+	if (DEBUG) {
+		ctx.fillStyle = "Black";
+		ctx.arc(0, 0, ((canvas.height / 2) * 0.8), 0, Math.PI * 2, false);
+		ctx.fill();
+	}
+	else {
+		ctx.drawImage(lockBody, -(canvas.width * 0.8) / 2, -(canvas.height * 0.8) / 2, canvas.width * 0.8, canvas.height * 0.8);
+	}
 	ctx.closePath();
 
 	ctx.beginPath();
-	ctx.fillStyle = "White";
-	ctx.arc(0, 0, ((canvas.height / 2) * 0.6), 0, Math.PI * 2, false);
-	ctx.fill();
+	if (DEBUG) {
+		ctx.fillStyle = "White";
+		ctx.arc(0, 0, ((canvas.height / 2) * 0.6), 0, Math.PI * 2, false);
+		ctx.fill();
+	}
+	else {
+		ctx.save();
+		ctx.rotate((lockRotation - 90) * (Math.PI / 180));
+		ctx.drawImage(lockBody, -(canvas.width * 0.6) / 2, -(canvas.height * 0.6) / 2, canvas.width * 0.6, canvas.height * 0.6);
+		ctx.restore();
+	}
 	ctx.closePath();
 
-	ctx.beginPath();
-	ctx.save();
-	ctx.rotate((lockRotation - 90) * (Math.PI / 180));
-	ctx.fillStyle = "Black";
-	ctx.fillRect(-(canvas.height / 2) * 0.6, -5, canvas.height * 0.6, 10);
-	ctx.fillRect(-5, -(canvas.height / 2) * 0.6, 10, canvas.height * 0.6);
-	ctx.fillStyle = "Red";
-	ctx.fillRect(0, -5, ((canvas.height / 2) * 0.6), 10);
-	ctx.restore();
-	ctx.closePath();
+	if (DEBUG) {
+		ctx.beginPath();
+		ctx.save();
+		ctx.rotate((lockRotation - 90) * (Math.PI / 180));
+		ctx.fillStyle = "Black";
+		ctx.fillRect(-(canvas.height / 2) * 0.6, -5, canvas.height * 0.6, 10);
+		ctx.fillRect(-5, -(canvas.height / 2) * 0.6, 10, canvas.height * 0.6);
+		ctx.fillStyle = "Red";
+		ctx.fillRect(0, -5, ((canvas.height / 2) * 0.6), 10);
+		ctx.restore();
+		ctx.closePath();
+	}
 }
 
 function drawPick() {
 	ctx.save();
 	ctx.rotate(pickAngle * (Math.PI / 180));
-	ctx.fillStyle = "Gray";
-	ctx.fillRect(0, -15, 500, 30);
+	if(DEBUG) {
+		ctx.fillStyle = "Gray";
+		ctx.fillRect(0, -15, 500, 30);
+	}
+	else {
+		ctx.drawImage(lockpick, 0, -24, 582, 48);
+	}
 	ctx.restore();
 }
 
