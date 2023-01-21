@@ -137,7 +137,9 @@ function drawPick() {
 		ctx.fillRect(0, -15, 500, 30);
 	}
 	else {
-		ctx.drawImage(lockPick, -32, 0, 582, 48);
+		ctx.translate(0, -canvas.height * 0.06);
+		var scaling = 5;
+		ctx.drawImage(lockPick, 0, -32 * scaling, 582 * scaling, 48 * scaling);
 	}
 	ctx.restore();
 }
