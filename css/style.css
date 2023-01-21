@@ -13,5 +13,5 @@ body {
 .cvGame {
 	flex-grow: 99;
 	width: 100%;
-	border: 1px sold black;
+	border: 1px solid black;
 }
