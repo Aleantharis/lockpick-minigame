@@ -90,13 +90,13 @@ function handleMouseMove(event) {
 	var alphaDeg = alphaRad * (180 / Math.PI);
 
 	if (transpX < 0 && transpY >= 0) {
-		alphaDeg = 90 - alphaDeg;
+		alphaDeg = 180 - alphaDeg;
 	}
 	else if (transpY < 0 && transpX < 0) {
 		alphaDeg += 180;
 	}
 	else if (transpX >= 0 && transpY < 0) {
-		alphaDeg = 270 - alphaDeg;
+		alphaDeg = 360 - alphaDeg;
 	}
 
 	document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg);
