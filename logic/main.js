@@ -28,7 +28,7 @@ var goalAngle = 0.0;
 var dmgTolerance = 0.0;
 var pickHealth = 100;
 var currMaxRotation = 0;
-var lifes = 0;
+var lifes = 1;
 
 function imgLoaded(event) {
 	if(++loadedImgs >= 3) {
@@ -275,7 +275,7 @@ function handleMouseMove(event) {
 	pickAngle = alphaDeg;
 	currMaxRotation = getCurrentMaxRotation();
 	if (DEBUG) {
-		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot: " + currMaxRotation + " | dmgTolerance: " + dmgTolerance + " | vic: " + vicTolerance;
+		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot: " + Math.floor(currMaxRotation) + " | dmgTolerance: " + dmgTolerance + " | vic: " + vicTolerance;
 	}
 	else {
 		document.getElementById("testOut").value = "";
@@ -314,8 +314,8 @@ function stopGame() {
 	clearInterval(gameLoop);
 	rightPressed = false;
 	document.getElementById("sDiff").disabled = false;
-	document.getElementById("pnlLifesIn").classList.remove("hidden");
-	document.getElementById("pnlLifesOut").classList.add("hidden");
+	// document.getElementById("pnlLifesIn").classList.remove("hidden");
+	// document.getElementById("pnlLifesOut").classList.add("hidden");
 	document.getElementById("btnStart").value = "Start";
 	document.getElementById("fMenu").onsubmit = startGameHandler;
 }
@@ -333,9 +333,9 @@ function startGame() {
 	gameLoop = setInterval(draw, 10);
 
 	document.getElementById("sDiff").disabled = true;
-	document.getElementById("pnlLifesIn").classList.add("hidden");
-	document.getElementById("outLifes").value = lifes;
-	document.getElementById("pnlLifesOut").classList.remove("hidden");
+	// document.getElementById("pnlLifesIn").classList.add("hidden");
+	// document.getElementById("outLifes").value = lifes;
+	// document.getElementById("pnlLifesOut").classList.remove("hidden");
 	document.getElementById("btnStart").value = "Stop";
 	document.getElementById("fMenu").onsubmit = stopGameHandler;
 }
