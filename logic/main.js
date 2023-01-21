@@ -68,10 +68,10 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 
 function clearCanvas() {
+	// https://stackoverflow.com/a/6722031
 	ctx.save();
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	//ctx.translate(canvas.width / 2, canvas.height / 2);
 	ctx.restore();
 }
 
@@ -204,10 +204,11 @@ function getMousePos(evt) {
 
 function handleMouseMove(event) {
 	// disable pick moving if lock is turning
-	if (!DEBUG && lockRotation > 0) {
+	if (!DEBUG && rightPressed) {
 		return;
 	}
 
+	// https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
 	var pos = getMousePos(event);          // get adjusted coordinates as above
 	var matrix = ctx.getTransform();         // W3C (future)
 	var imatrix = matrix.invertSelf();
@@ -286,7 +287,7 @@ function startGame() {
 	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
 
-	dmgTolerance = Math.ceil(((100 - difficulty) / 5) + minTolerance);
+	dmgTolerance = Math.ceil(((100 - difficulty) / 2.5) + minTolerance);
 
 	gameLoop = setInterval(draw, 10);
 
@@ -300,3 +301,7 @@ function startGame() {
 
 document.onmousemove = handleMouseMove;
 document.getElementById("fMenu").onsubmit = startGameHandler;
+
+
+// TODO: print images instead of rectangles for lockpicky feeling - maybe tweak numbers for balancing
+// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
