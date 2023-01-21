@@ -2,7 +2,7 @@ const canvasHeightMargin = 30;
 const lockRotationSpeed = 0.5;
 const maxPickHealth = 110;
 const minTolerance = 5;
-const vicTolerance = 0.3;
+var vicTolerance = 0.1;
 const minRotation = 2;
 const goalRotation = 90;
 
@@ -233,7 +233,7 @@ function handleMouseMove(event) {
 	pickAngle = alphaDeg;
 	currMaxRotation = getCurrentMaxRotation();
 	if (DEBUG) {
-		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot" + currMaxRotation;
+		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot: " + currMaxRotation + " | dmgTolerance: " + dmgTolerance + " | vic: " + vicTolerance;
 	}
 	else {
 		document.getElementById("testOut").value = "";
@@ -246,7 +246,10 @@ function success() {
 }
 
 function failure() {
-	if(--lifes == 0) {
+	rightPressed = false;
+	pickHealth = maxPickHealth - difficulty;
+
+	if (--lifes == 0) {
 		stopGame();
 		alert("You ran out of lockpicks!");
 	}
