@@ -55,19 +55,25 @@ function clearCanvas() {
 }
 
 function drawDial() {
-	ctx.arc(0, 0, ((canvas.height / 2) * 0.8), 0, Math.PI * 2, false);
+	ctx.beginPath();
 	ctx.fillStyle = "Black";
+	ctx.arc(0, 0, ((canvas.height / 2) * 0.8), 0, Math.PI * 2, false);
 	ctx.fill();
+	ctx.closePath();
 
-	ctx.arc(0, 0, ((canvas.height / 2) * 0.6), 0, Math.PI * 2, false);
+	ctx.beginPath();
 	ctx.fillStyle = "White";
+	ctx.arc(0, 0, ((canvas.height / 2) * 0.6), 0, Math.PI * 2, false);
 	ctx.fill();
+	ctx.closePath();
 
+	ctx.beginPath();
 	ctx.save();
-	ctx.rotate((lockRotation + 270) * (Math.PI / 180));
+	ctx.rotate((lockRotation + 180) * (Math.PI / 180));
 	ctx.fillStyle = "Red";
 	ctx.fillRect(-5, 0, 10, ((canvas.height / 2) * 0.6));
 	ctx.restore();
+	ctx.closePath();
 }
 
 function drawPick() {
@@ -80,10 +86,12 @@ function drawPick() {
 
 function draw() {
 	// add check if lock rotation is within target tolerance, and add "victory check" if angle = 90
-	if(rightPressed && lockRotation < 90) {
-		lockRotation++;
+	if (rightPressed) {
+		if (lockRotation < 90) {
+			lockRotation++;
+		}
 	}
-	else {
+	else if (lockRotation > 0) {
 		lockRotation--;
 	}
 
@@ -101,6 +109,14 @@ function drawCross() {
 	ctx.fillStyle = "Black";
 	ctx.fillRect(-(canvas.width / 2), -5, canvas.width, 10);
 	ctx.fillRect(-5, -(canvas.height / 2), 10, canvas.height);
+
+	ctx.save();
+	ctx.beginPath();
+	ctx.rotate((goalAngle + 180) * (Math.PI / 180));
+	ctx.fillStyle = "Red";
+	ctx.fillRect(-5, 0, 10, ((canvas.width / 2)));
+	ctx.closePath();
+	ctx.restore();
 }
 
 function getMousePos(evt) {
@@ -152,7 +168,7 @@ function handleMouseMove(event) {
 function stopGame(event) {
 	event.preventDefault();
 	clearInterval(gameLoop);
-	document.getElementById("fMenu").disabled = false;
+	document.getElementById("sDiff").disabled = false;
 	document.getElementById("btnStart").value = "Start";
 	document.getElementById("fMenu").onsubmit = startGame;
 }
@@ -160,9 +176,14 @@ function stopGame(event) {
 function startGame(event) {
 	event.preventDefault();
 	console.log("difficulty: " + document.getElementById("sDiff").value);
-	document.getElementById("fMenu").disabled = true;
+	
+	// TODO setup new game (difficulty setting, randomize target etc.)
+	lockRotation = 0.0;
+	goalAngle = Math.floor(Math.random() * 360);
+
 	gameLoop = setInterval(draw, 10);
 
+	document.getElementById("sDiff").disabled = true;
 	document.getElementById("btnStart").value = "Stop";
 	document.getElementById("fMenu").onsubmit = stopGame;
 }
