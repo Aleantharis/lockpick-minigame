@@ -6,6 +6,7 @@ const vicTolerance = 0.25;
 const minRotation = 2;
 const goalRotation = 90;
 const lockBody = new Image();
+var loadedImgs = 0;
 lockBody.src = "img/lock-ring.png";
 lockBody.onload = imgLoaded;
 const lockCore = new Image();
@@ -30,7 +31,7 @@ var currMaxRotation = 0;
 var lifes = 0;
 
 function imgLoaded(event) {
-	if(++imgs >= 3) {
+	if(++loadedImgs >= 3) {
 		document.getElementById("btnStart").disabled = false;
 	}
 }
