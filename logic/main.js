@@ -80,6 +80,9 @@ function drawDial() {
 	ctx.beginPath();
 	ctx.save();
 	ctx.rotate((lockRotation - 90) * (Math.PI / 180));
+	ctx.fillStyle = "Black";
+	ctx.fillRect(-(canvas.height / 2) * 0.6, -5, canvas.height * 0.6, 10);
+	ctx.fillRect(-5, -(canvas.height / 2) * 0.6, 10, canvas.height * 0.6);
 	ctx.fillStyle = "Red";
 	ctx.fillRect(0, -5, ((canvas.height / 2) * 0.6), 10);
 	ctx.restore();
@@ -122,7 +125,7 @@ function drawCross() {
 
 	ctx.save();
 	ctx.beginPath();
-	ctx.rotate((goalAngle + 180) * (Math.PI / 180));
+	ctx.rotate((goalAngle) * (Math.PI / 180));
 	ctx.fillStyle = "Red";
 	ctx.fillRect(0, -5, ((canvas.width / 2)), 10);
 	ctx.closePath();
