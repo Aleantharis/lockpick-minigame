@@ -314,8 +314,8 @@ function stopGame() {
 	clearInterval(gameLoop);
 	rightPressed = false;
 	document.getElementById("sDiff").disabled = false;
-	// document.getElementById("pnlLifesIn").classList.remove("hidden");
-	// document.getElementById("pnlLifesOut").classList.add("hidden");
+	document.getElementById("pnlLifesIn").classList.remove("hidden");
+	document.getElementById("pnlLifesOut").classList.add("hidden");
 	document.getElementById("btnStart").value = "Start";
 	document.getElementById("fMenu").onsubmit = startGameHandler;
 }
@@ -333,9 +333,9 @@ function startGame() {
 	gameLoop = setInterval(draw, 10);
 
 	document.getElementById("sDiff").disabled = true;
-	// document.getElementById("pnlLifesIn").classList.add("hidden");
-	// document.getElementById("outLifes").value = lifes;
-	// document.getElementById("pnlLifesOut").classList.remove("hidden");
+	document.getElementById("pnlLifesIn").classList.add("hidden");
+	document.getElementById("outLifes").value = lifes;
+	document.getElementById("pnlLifesOut").classList.remove("hidden");
 	document.getElementById("btnStart").value = "Stop";
 	document.getElementById("fMenu").onsubmit = stopGameHandler;
 }
