@@ -2,19 +2,20 @@ var canvas = document.getElementById("cvGame");
 var ctx = canvas.getContext("2d");
 var gameLoop;
 
-resize_canvas();
+resizeCanvas();
 // Attempt at auto-resize
-function resize_canvas(){
+function resizeCanvas(){
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight - (document.getElementById("fMenu").offsetHeight + 30);
 
+	// Move coordinate origin to center of canvas
+	ctx.translate(canvas.width / 2, canvas.height / 2);
+
 	drawCross();
 }
-window.addEventListener("resize", resize_canvas);
-window.addEventListener("orientationchange", resize_canvas);
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("orientationchange", resizeCanvas);
 
-// Move coordinate origin to center of canvas
-ctx.translate(canvas.width / 2, canvas.height / 2);
 
 var pickAngle = 0.0;
 
