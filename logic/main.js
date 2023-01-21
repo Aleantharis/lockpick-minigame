@@ -13,7 +13,7 @@ const lockCore = new Image();
 lockCore.src = "img/lock-core.png";
 lockCore.onload = imgLoaded;
 const lockPick = new Image();
-lockPick.src = "img/lockpick.png";
+lockPick.src = "img/lockpick-2.png";
 lockPick.onload = imgLoaded;
 
 var DEBUG = false;
@@ -131,15 +131,16 @@ function drawDial() {
 
 function drawPick() {
 	ctx.save();
-	ctx.rotate(pickAngle * (Math.PI / 180));
 	if(DEBUG) {
+		ctx.rotate(pickAngle * (Math.PI / 180));
 		ctx.fillStyle = "Gray";
 		ctx.fillRect(0, -15, 500, 30);
 	}
 	else {
 		ctx.translate(0, -canvas.height * 0.06);
-		var scaling = 5;
-		ctx.drawImage(lockPick, 0, -32 * scaling, 582 * scaling, 48 * scaling);
+		ctx.rotate(pickAngle * (Math.PI / 180));
+		var scaling = 1;
+		ctx.drawImage(lockPick, 0, -25 * scaling, 900 * scaling, 50 * scaling);
 	}
 	ctx.restore();
 }
