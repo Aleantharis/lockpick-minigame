@@ -55,14 +55,16 @@ function handleMouseMove(event) {
 	document.getElementById("testOut").value = alphaDeg;
 }
 
-function stopGame() {
+function stopGame(event) {
+	event.preventDefault();
 	clearInterval(gameLoop);
 	document.getElementById("fMenu").disabled = false;
 	document.getElementById("btnStart").value = "Start";
 	document.getElementById("fMenu").onsubmit = startGame;
 }
 
-function startGame() {
+function startGame(event) {
+	event.preventDefault();
 	console.log("difficulty: " + document.getElementById("sDiff").value);
 	document.getElementById("fMenu").disabled = true;
 	gameLoop = setInterval(draw, 10);
