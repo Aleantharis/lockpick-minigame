@@ -32,7 +32,8 @@ body {
 .cvGame {
 	flex-grow: 99;
 	width: 100%;
-	border: 1px solid black;
+	border: 1px solid white;
+	border-radius: 5px;
 	margin-bottom: 10px;
 }
 
@@ -69,48 +70,3 @@ div {
 	display: flex;
 }
 
-
-
-.life > * {
-	margin:0px;
-	padding:0px;
-}
-
-.life {
-	display: block;
-    float: left;
-    height: 46px;
-    padding: 0 10px;
-}
-.life:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-}
-.life:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
-}
-.life:not(:checked) > label:before {
-    content: '🖤 ';
-}
-.life > input:checked ~ label {
-    color: #ffc700;    
-}
-.life:not(:checked) > label:hover,
-.life:not(:checked) > label:hover ~ label {
-    color: #deb217;  
-}
-.life > input:checked + label:hover,
-.life > input:checked + label:hover ~ label,
-.life > input:checked ~ label:hover,
-.life > input:checked ~ label:hover ~ label,
-.life > label:hover ~ input:checked ~ label {
-    color: #c59b08;
-}
-
-/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
