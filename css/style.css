@@ -1,15 +1,15 @@
 body {
-	display:flex;
+	display: flex;
 	flex-direction: row;
 }
 
 .fMenu {
-	flex-grow:1;
+	flex-grow: 1;
 	max-height: 10%;
 	width: 100%;
 }
 
 .cvGame {
-	flex-grow:99;
+	flex-grow: 99;
 	width: 100%;
 }
