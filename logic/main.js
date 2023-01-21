@@ -141,7 +141,7 @@ function drawPick() {
 	}
 	else {
 		ctx.rotate(lockRotation * (Math.PI / 180));
-		ctx.translate(0, -canvas.height * 0.06);
+		ctx.translate(0, -canvas.height * 0.12);
 		ctx.rotate(pickAngle * (Math.PI / 180));
 		var scaling = canvas.height / 900;
 		ctx.drawImage(lockPick, 0, -25 * scaling, 900 * scaling, 50 * scaling);
