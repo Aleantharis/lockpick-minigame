@@ -100,15 +100,8 @@ function drawPick() {
 }
 
 function getCurrentMaxRotation() {
-	var diff = Math.abs(pickAngle - goalAngle);
-
-	if(diff > dmgTolerance) {
-		return 0;
-	}
-
-	var pct = Math.min(0, diff - (vicTolerance * dmgTolerance)) / ((1-vicTolerance) * dmgTolerance);
-
-	return 90 - (90 * pct);
+	var pct = Math.max(0, ((Math.abs(pickAngle - goalAngle) / dmgTolerance) - vicTolerance) / (1 - vicTolerance));
+	return Math.max(0, 90 - (90 * pct));
 }
 
 function draw() {
@@ -116,15 +109,15 @@ function draw() {
 	if (rightPressed) {
 		if (lockRotation < currMaxRotation) {
 			lockRotation++;
-			
-			if(lockRotation >= 90) {
+
+			if (lockRotation >= 90) {
 				success();
 			}
 		}
-		else if(!DEBUG) {
+		else if (!DEBUG) {
 			pickHealth--;
 
-			if(pickHealth <= 0) {
+			if (pickHealth <= 0) {
 				failure();
 			}
 		}
@@ -266,7 +259,7 @@ function startGame(event) {
 	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
 
-	dmgTolerance = Math.ceil(((100-difficulty) / 10) + 5);
+	dmgTolerance = Math.ceil(((100 - difficulty) / 10) + 5);
 
 	gameLoop = setInterval(draw, 10);
 
