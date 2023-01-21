@@ -7,6 +7,8 @@ resize_canvas();
 function resize_canvas(){
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight - (document.getElementById("fMenu").offsetHeight + 30);
+
+	drawCross();
 }
 window.addEventListener("resize", resize_canvas);
 window.addEventListener("orientationchange", resize_canvas);
@@ -40,6 +42,21 @@ function drawPick() {
 
 function draw() {
 	drawDial();
+}
+
+function drawCross() {
+	ctx.beginPath();
+	ctx.fillRect(-(canvas.width/2), -5, canvas.width , 10);
+	ctx.fillStyle = "Black";
+	ctx.fill();
+	ctx.closePath();
+
+	
+	ctx.beginPath();
+	ctx.fillRect(-5, -(canvas.height/2), 10 , canvas.height);
+	ctx.fillStyle = "Black";
+	ctx.fill();
+	ctx.closePath();
 }
 
 function handleMouseMove(event) {
@@ -85,7 +102,7 @@ function startGame(event) {
 
 
 document.onmousemove = handleMouseMove;
-draw();
+drawCross();
 
 
 document.getElementById("fMenu").onsubmit = startGame;
