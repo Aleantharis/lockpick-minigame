@@ -4,9 +4,13 @@ var DEBUG = true;
 var canvas = document.getElementById("cvGame");
 var ctx = canvas.getContext("2d");
 var gameLoop;
-
+var rightPressed = false;
+var lockRotation = 0.0;
+var pickAngle = 0.0;
+var goalAngle = 0.0;
 
 resizeCanvas();
+
 // Attempt at auto-resize
 function resizeCanvas() {
 	canvas.width = window.innerWidth;
@@ -26,7 +30,21 @@ function debugToggle() {
 }
 window.addEventListener("change", debugToggle);
 
-var pickAngle = 0.0;
+
+function keyDownHandler(event) {
+	if (e.key === "Right" || e.key === "ArrowRight" || e.key === "D") {
+		rightPressed = true;
+	}
+}
+
+function keyUpHandler(event) {
+	if (e.key === "Right" || e.key === "ArrowRight" || e.key === "D") {
+		rightPressed = false;
+	}
+}
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
 
 function clearCanvas() {
 	ctx.save();
@@ -48,6 +66,15 @@ function drawDial() {
 	ctx.fillStyle = "White";
 	ctx.fill();
 	ctx.closePath();
+
+	ctx.save();
+	ctx.rotate(lockRotation * (Math.PI / 180));
+	ctx.beginPath();
+	ctx.fillRect(-5, 0, 10, ((canvas.height / 2) * 0.6));
+	ctx.fillStyle = "Red";
+	ctx.fill();
+	ctx.closePath();
+	ctx.restore();
 }
 
 function drawPick() {
@@ -61,6 +88,11 @@ function drawPick() {
 }
 
 function draw() {
+	// add check if lock rotation is within target tolerance, and add "victory check" if angle = 90
+	if(rightPressed) {
+		lockRotation++;
+	}
+
 	clearCanvas();
 
 	if (DEBUG) {
