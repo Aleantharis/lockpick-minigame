@@ -4,9 +4,9 @@ var gameLoop;
 
 resizeCanvas();
 // Attempt at auto-resize
-function resizeCanvas(){
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight - (document.getElementById("fMenu").offsetHeight + 30);
+function resizeCanvas() {
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight - (document.getElementById("fMenu").offsetHeight + 30);
 
 	// Move coordinate origin to center of canvas
 	ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -47,22 +47,40 @@ function draw() {
 
 function drawCross() {
 	ctx.beginPath();
-	ctx.fillRect(-(canvas.width/2), -5, canvas.width , 10);
+	ctx.fillRect(-(canvas.width / 2), -5, canvas.width, 10);
 	ctx.fillStyle = "Black";
 	ctx.fill();
 	ctx.closePath();
 
-	
+
 	ctx.beginPath();
-	ctx.fillRect(-5, -(canvas.height/2), 10 , canvas.height);
+	ctx.fillRect(-5, -(canvas.height / 2), 10, canvas.height);
 	ctx.fillStyle = "Black";
 	ctx.fill();
 	ctx.closePath();
 }
 
+function getMousePos(evt) {
+	var rect = canvas.getBoundingClientRect(), // abs. size of element
+		scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for x
+		scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for y
+
+	return {
+		x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
+		y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
+	}
+}
+
 function handleMouseMove(event) {
-	var transpX = event.x - (document.body.clientWidth / 2);
-	var transpY = event.y - (document.body.clientHeight / 2);
+	// var transpX = event.x - (document.body.clientWidth / 2);
+	// var transpY = event.y - (document.body.clientHeight / 2);
+
+	var pos = getMousePos(event);          // get adjusted coordinates as above
+	var matrix = ctx.getTransform();         // W3C (future)
+	var imatrix = matrix.invertSelf();
+
+	var transpX = pos.x * imatrix.a + pos.y * imatrix.c + imatrix.e;
+	var transpY = pos.x * imatrix.b + pos.y * imatrix.d + imatrix.f;
 
 	// alpha = arctan(a / b) -> arctan(y / x)
 
@@ -79,7 +97,7 @@ function handleMouseMove(event) {
 		alphaDeg += 270;
 	}
 
-	document.getElementById("testOut").value = alphaDeg;
+	document.getElementById("testOut").value = "X: " + transpX + " | Y: " + transpY + " | alpha: " + alphaDeg;
 }
 
 function stopGame(event) {
