@@ -6,11 +6,14 @@ const vicTolerance = 0.25;
 const minRotation = 2;
 const goalRotation = 90;
 const lockBody = new Image();
-lockBody.src = "img/lock-body.png";
+lockBody.src = "img/lock-ring.png";
+lockBody.onload = imgLoaded;
 const lockCore = new Image();
 lockCore.src = "img/lock-core.png";
+lockCore.onload = imgLoaded;
 const lockPick = new Image();
 lockPick.src = "img/lockpick.png";
+lockPick.onload = imgLoaded;
 
 var DEBUG = false;
 var canvas = document.getElementById("cvGame");
@@ -25,6 +28,12 @@ var dmgTolerance = 0.0;
 var pickHealth = 100;
 var currMaxRotation = 0;
 var lifes = 0;
+
+function imgLoaded(event) {
+	if(++imgs >= 3) {
+		document.getElementById("btnStart").disabled = false;
+	}
+}
 
 resizeCanvas();
 // Attempt at auto-resize
