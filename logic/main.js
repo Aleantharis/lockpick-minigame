@@ -137,7 +137,7 @@ function drawPick() {
 		ctx.fillRect(0, -15, 500, 30);
 	}
 	else {
-		ctx.drawImage(lockpick, 0, -24, 582, 48);
+		ctx.drawImage(lockPick, 0, -24, 582, 48);
 	}
 	ctx.restore();
 }
