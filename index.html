@@ -1,0 +1,23 @@
+<html>
+<head>
+</head>
+  <meta charset="utf-8" />
+  <title>Lockpicking Minigame</title>
+  <script type="module" src="logic/main.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="shortcut icon" href="img/favico.png">
+<body>
+	<form id="fMenu" class="fMenu">
+		<select id="sDiff">
+			<option value="0">Novice</option>
+			<option value="25">Apprentice</option>
+			<option value="50">Adept</option>
+			<option value="75">Expert</option>
+			<option value="100">Master</option>
+		</select>
+		<input type="submit" value="Start">
+		<output id="testOut"/>
+	</form>
+	<canvas id="cvGame" class="cvGame" width=480 height=320></canvas>
+</body>
+</html>
