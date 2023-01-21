@@ -32,13 +32,13 @@ window.addEventListener("change", debugToggle);
 
 
 function keyDownHandler(event) {
-	if (event.key === "Right" || event.key === "ArrowRight" || event.key === "D") {
+	if (event.key === "Right" || event.key === "ArrowRight" || event.key === "D" || event.key === "d") {
 		rightPressed = true;
 	}
 }
 
 function keyUpHandler(event) {
-	if (event.key === "Right" || event.key === "ArrowRight" || event.key === "D") {
+	if (event.key === "Right" || event.key === "ArrowRight" || event.key === "D" || event.key === "d") {
 		rightPressed = false;
 	}
 }
@@ -55,42 +55,36 @@ function clearCanvas() {
 }
 
 function drawDial() {
-	ctx.beginPath();
 	ctx.arc(0, 0, ((canvas.height / 2) * 0.8), 0, Math.PI * 2, false);
 	ctx.fillStyle = "Black";
 	ctx.fill();
-	ctx.closePath();
 
-	ctx.beginPath();
 	ctx.arc(0, 0, ((canvas.height / 2) * 0.6), 0, Math.PI * 2, false);
 	ctx.fillStyle = "White";
 	ctx.fill();
-	ctx.closePath();
 
 	ctx.save();
-	ctx.beginPath();
 	ctx.rotate((lockRotation + 270) * (Math.PI / 180));
-	ctx.fillRect(-5, 0, 10, ((canvas.height / 2) * 0.6));
 	ctx.fillStyle = "Red";
-	ctx.fill();
-	ctx.closePath();
+	ctx.fillRect(-5, 0, 10, ((canvas.height / 2) * 0.6));
 	ctx.restore();
 }
 
 function drawPick() {
 	ctx.save();
-	ctx.beginPath();
 	ctx.rotate(pickAngle * (Math.PI / 180));
 	ctx.fillStyle = "Gray";
 	ctx.fillRect(0, -15, 500, 30);
-	ctx.closePath();
 	ctx.restore();
 }
 
 function draw() {
 	// add check if lock rotation is within target tolerance, and add "victory check" if angle = 90
-	if(rightPressed) {
+	if(rightPressed && lockRotation < 90) {
 		lockRotation++;
+	}
+	else {
+		lockRotation--;
 	}
 
 	clearCanvas();
@@ -104,17 +98,9 @@ function draw() {
 }
 
 function drawCross() {
-	ctx.beginPath();
+	ctx.fillStyle = "Black";
 	ctx.fillRect(-(canvas.width / 2), -5, canvas.width, 10);
-	ctx.fillStyle = "Black";
-	ctx.fill();
-	ctx.closePath();
-
-	ctx.beginPath();
 	ctx.fillRect(-5, -(canvas.height / 2), 10, canvas.height);
-	ctx.fillStyle = "Black";
-	ctx.fill();
-	ctx.closePath();
 }
 
 function getMousePos(evt) {
