@@ -3,14 +3,25 @@ body {
 	flex-direction: column;
 	overflow: hidden;
 	background: url('../img/background.jpg');
+	background-size: contain;
+}
+
+.pnlMenu {
+	display: flex;
+	flex-direction: row;
+}
+
+.pnlDebug {	
+	display: flex;
+	flex-direction: row;
 }
 
 .fMenu {
 	flex-grow: 1;
 	max-height: 10%;
 	width: 100%;
-	margin-bottom:10px;
-	display:flex;
+	margin-bottom: 10px;
+	display: flex;
 	flex-direction: row;
 }
 
@@ -18,18 +29,39 @@ body {
 	flex-grow: 99;
 	width: 100%;
 	border: 1px solid black;
-	margin-bottom:10px;
+	margin-bottom: 10px;
 }
 
-.fMenu > * {
-	flex-grow:1;
+.fMenu>* {
+	flex-grow: 1;
 	margin-right: 10px;
 }
 
-.fMenu > label  {
+.fMenu>label {
 	margin-right: 0px;
 }
 
 .hidden {
-	display:none;
+	display: none;
+}
+
+select,
+input {
+	background: #00000099;
+	border: 1px solid white;
+	border-radius: 5px;
+	color: white;
+	padding: 10px;
+
+	text-align: center;
+}
+
+label {
+	color: white;
+	padding: 10px;
+	text-align: center;
+}
+
+div {
+	display: flex;
 }
