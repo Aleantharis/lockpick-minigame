@@ -2,6 +2,7 @@ const canvasHeightMargin = 30;
 const lockRotationSpeed = 0.5;
 const maxPickHealth = 110;
 const minTolerance = 5;
+const vicTolerance = 0.3;
 
 var DEBUG = true;
 var canvas = document.getElementById("cvGame");
@@ -12,8 +13,9 @@ var difficulty = 0;
 var lockRotation = 0.0;
 var pickAngle = 0.0;
 var goalAngle = 0.0;
-var tolerance = 0.0;
+var dmgTolerance = 0.0;
 var pickHealth = 100;
+var currMaxRotation = 0;
 
 resizeCanvas();
 
@@ -97,11 +99,34 @@ function drawPick() {
 	ctx.restore();
 }
 
+function getCurrentMaxRotation() {
+	var diff = Math.abs(pickAngle - goalAngle);
+
+	if(diff > dmgTolerance) {
+		return 0;
+	}
+
+	var pct = Math.min(0, diff - (vicTolerance * dmgTolerance)) / ((1-vicTolerance) * dmgTolerance);
+
+	return 90 - (90 * pct);
+}
+
 function draw() {
 	// add check if lock rotation is within target tolerance, and add "victory check" if angle = 90
 	if (rightPressed) {
-		if (lockRotation < 90) {
+		if (lockRotation < currMaxRotation) {
 			lockRotation++;
+			
+			if(lockRotation >= 90) {
+				success();
+			}
+		}
+		else if(!DEBUG) {
+			pickHealth--;
+
+			if(pickHealth <= 0) {
+				failure();
+			}
 		}
 	}
 	else if (lockRotation > 0) {
@@ -133,17 +158,33 @@ function drawCross() {
 
 	ctx.save();
 	ctx.beginPath();
-	ctx.rotate((goalAngle - tolerance) * (Math.PI / 180));
+	ctx.rotate((goalAngle - dmgTolerance) * (Math.PI / 180));
 	ctx.fillStyle = "Green";
-	ctx.fillRect(0, -5, ((canvas.width / 2)), 10);
+	ctx.fillRect(0, -2, ((canvas.width / 2)), 4);
 	ctx.closePath();
 	ctx.restore();
 
 	ctx.save();
 	ctx.beginPath();
-	ctx.rotate((goalAngle + tolerance) * (Math.PI / 180));
+	ctx.rotate((goalAngle + dmgTolerance) * (Math.PI / 180));
 	ctx.fillStyle = "Green";
-	ctx.fillRect(0, -5, ((canvas.width / 2)), 10);
+	ctx.fillRect(0, -2, ((canvas.width / 2)), 4);
+	ctx.closePath();
+	ctx.restore();
+
+	ctx.save();
+	ctx.beginPath();
+	ctx.rotate((goalAngle - (dmgTolerance * vicTolerance)) * (Math.PI / 180));
+	ctx.fillStyle = "Yellow";
+	ctx.fillRect(0, -2, ((canvas.width / 2)), 4);
+	ctx.closePath();
+	ctx.restore();
+
+	ctx.save();
+	ctx.beginPath();
+	ctx.rotate((goalAngle + (dmgTolerance * vicTolerance)) * (Math.PI / 180));
+	ctx.fillStyle = "Yellow";
+	ctx.fillRect(0, -2, ((canvas.width / 2)), 4);
 	ctx.closePath();
 	ctx.restore();
 }
@@ -188,12 +229,24 @@ function handleMouseMove(event) {
 	}
 
 	pickAngle = alphaDeg;
+	currMaxRotation = getCurrentMaxRotation();
 	if (DEBUG) {
-		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle;
+		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot" + currMaxRotation;
 	}
 	else {
 		document.getElementById("testOut").value = "";
 	}
+}
+
+function success() {
+	stopGame();
+	alert("Lock successfully picked!");
+}
+
+function failure() {
+	// todo implement lifes
+	stopGame();
+	alert("Lockpick broke!");
 }
 
 function stopGame(event) {
@@ -213,7 +266,7 @@ function startGame(event) {
 	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
 
-	tolerance = Math.ceil((difficulty / 10) + 5);
+	dmgTolerance = Math.ceil(((100-difficulty) / 10) + 5);
 
 	gameLoop = setInterval(draw, 10);
 
