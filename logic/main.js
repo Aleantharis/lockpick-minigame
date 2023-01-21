@@ -32,13 +32,13 @@ window.addEventListener("change", debugToggle);
 
 
 function keyDownHandler(event) {
-	if (e.key === "Right" || e.key === "ArrowRight" || e.key === "D") {
+	if (event.key === "Right" || event.key === "ArrowRight" || event.key === "D") {
 		rightPressed = true;
 	}
 }
 
 function keyUpHandler(event) {
-	if (e.key === "Right" || e.key === "ArrowRight" || e.key === "D") {
+	if (event.key === "Right" || event.key === "ArrowRight" || event.key === "D") {
 		rightPressed = false;
 	}
 }
@@ -68,8 +68,8 @@ function drawDial() {
 	ctx.closePath();
 
 	ctx.save();
-	ctx.rotate(lockRotation * (Math.PI / 180));
 	ctx.beginPath();
+	ctx.rotate((lockRotation + 270) * (Math.PI / 180));
 	ctx.fillRect(-5, 0, 10, ((canvas.height / 2) * 0.6));
 	ctx.fillStyle = "Red";
 	ctx.fill();
