@@ -1,3 +1,5 @@
+const canvasHeightMargin = 30;
+
 var canvas = document.getElementById("cvGame");
 var ctx = canvas.getContext("2d");
 var gameLoop;
@@ -6,7 +8,7 @@ resizeCanvas();
 // Attempt at auto-resize
 function resizeCanvas() {
 	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight - (document.getElementById("fMenu").offsetHeight + 30);
+	canvas.height = window.innerHeight - (document.getElementById("fMenu").offsetHeight + canvasHeightMargin);
 
 	// Move coordinate origin to center of canvas
 	ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -87,17 +89,17 @@ function handleMouseMove(event) {
 	var alphaRad = Math.atan(Math.abs(transpY) / Math.abs(transpX));
 	var alphaDeg = alphaRad * (180 / Math.PI);
 
-	if (transpY < 0 && transpX >= 0) {
+	if (transpX < 0 && transpY >= 0) {
 		alphaDeg += 90;
 	}
 	else if (transpY < 0 && transpX < 0) {
 		alphaDeg += 180;
 	}
-	else if (transpY >= 0 && transpX < 0) {
+	else if (transpX >= 0 && transpY < 0) {
 		alphaDeg += 270;
 	}
 
-	document.getElementById("testOut").value = "X: " + transpX + " | Y: " + transpY + " | alpha: " + alphaDeg;
+	document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg);
 }
 
 function stopGame(event) {
