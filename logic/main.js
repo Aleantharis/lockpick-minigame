@@ -276,4 +276,4 @@ function startGame() {
 }
 
 document.onmousemove = handleMouseMove;
-document.getElementById("fMenu").onsubmit = startGame;
+document.getElementById("fMenu").onsubmit = startGameHandler;
