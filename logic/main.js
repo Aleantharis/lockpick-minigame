@@ -3,8 +3,10 @@ const lockRotationSpeed = 0.5;
 const maxPickHealth = 110;
 const minTolerance = 5;
 const vicTolerance = 0.3;
+const minRotation = 2;
+const goalRotation = 90;
 
-var DEBUG = true;
+var DEBUG = false;
 var canvas = document.getElementById("cvGame");
 var ctx = canvas.getContext("2d");
 var gameLoop;
@@ -16,9 +18,9 @@ var goalAngle = 0.0;
 var dmgTolerance = 0.0;
 var pickHealth = 100;
 var currMaxRotation = 0;
+var lifes = 0;
 
 resizeCanvas();
-
 // Attempt at auto-resize
 function resizeCanvas() {
 	canvas.width = window.innerWidth;
@@ -35,6 +37,13 @@ window.addEventListener("orientationchange", resizeCanvas);
 
 function debugToggle() {
 	DEBUG = document.getElementById("cbDebug").checked;
+
+	if (DEBUG) {
+		document.getElementById("testOut").classList.remove("hidden");
+	}
+	else {
+		document.getElementById("testOut").classList.add("hidden");
+	}
 }
 document.getElementById("cbDebug").addEventListener("change", debugToggle);
 
@@ -101,7 +110,7 @@ function drawPick() {
 
 function getCurrentMaxRotation() {
 	var pct = Math.max(0, ((Math.abs(pickAngle - goalAngle) / dmgTolerance) - vicTolerance) / (1 - vicTolerance));
-	return Math.max(0, 90 - (90 * pct));
+	return Math.max(minRotation, goalRotation - (goalRotation * pct));
 }
 
 function draw() {
@@ -110,7 +119,7 @@ function draw() {
 		if (lockRotation < currMaxRotation) {
 			lockRotation++;
 
-			if (lockRotation >= 90) {
+			if (lockRotation >= goalRotation) {
 				success();
 			}
 		}
@@ -237,9 +246,13 @@ function success() {
 }
 
 function failure() {
-	// todo implement lifes
-	stopGame();
-	alert("Lockpick broke!");
+	if(--lifes == 0) {
+		stopGame();
+		alert("You ran out of lockpicks!");
+	}
+	else {
+		alert("Your lockpick broke!");
+	}
 }
 
 function stopGameHandler(event) {
@@ -254,7 +267,10 @@ function startGameHandler(event) {
 
 function stopGame() {
 	clearInterval(gameLoop);
+	rightPressed = false;
 	document.getElementById("sDiff").disabled = false;
+	document.getElementById("pnlLifesIn").classList.remove("hidden");
+	document.getElementById("pnlLifesOut").classList.add("hidden");
 	document.getElementById("btnStart").value = "Start";
 	document.getElementById("fMenu").onsubmit = startGameHandler;
 }
@@ -262,15 +278,19 @@ function stopGame() {
 function startGame() {
 	console.log("difficulty: " + difficulty);
 
+	lifes = document.getElementById("inLifes").value;
 	lockRotation = 0.0;
 	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
 
-	dmgTolerance = Math.ceil(((100 - difficulty) / 10) + 5);
+	dmgTolerance = Math.ceil(((100 - difficulty) / 5) + minTolerance);
 
 	gameLoop = setInterval(draw, 10);
 
 	document.getElementById("sDiff").disabled = true;
+	document.getElementById("pnlLifesIn").classList.add("hidden");
+	document.getElementById("outLifes").value = lifes;
+	document.getElementById("pnlLifesOut").classList.remove("hidden");
 	document.getElementById("btnStart").value = "Stop";
 	document.getElementById("fMenu").onsubmit = stopGameHandler;
 }

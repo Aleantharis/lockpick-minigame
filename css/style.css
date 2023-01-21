@@ -28,3 +28,7 @@ body {
 .fMenu > label  {
 	margin-right: 0px;
 }
+
+.hidden {
+	display:none;
+}
