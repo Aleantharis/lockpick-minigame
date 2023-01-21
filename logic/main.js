@@ -70,7 +70,7 @@ function startGame(event) {
 	gameLoop = setInterval(draw, 10);
 
 	document.getElementById("btnStart").value = "Stop";
-	document.getElementById("fMenu").onsubmit = startGame;
+	document.getElementById("fMenu").onsubmit = stopGame;
 }
 
 
