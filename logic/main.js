@@ -76,7 +76,7 @@ function startGame(event) {
 
 
 document.onmousemove = handleMouseMove;
-//setInterval(draw, 10);
+draw();
 
 
 document.getElementById("fMenu").onsubmit = startGame;
