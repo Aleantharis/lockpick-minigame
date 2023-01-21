@@ -1,6 +1,7 @@
 const canvasHeightMargin = 30;
 const lockRotationSpeed = 0.5;
 const maxPickHealth = 110;
+const minTolerance = 5;
 
 var DEBUG = true;
 var canvas = document.getElementById("cvGame");
@@ -11,6 +12,7 @@ var difficulty = 0;
 var lockRotation = 0.0;
 var pickAngle = 0.0;
 var goalAngle = 0.0;
+var tolerance = 0.0;
 var pickHealth = 100;
 
 resizeCanvas();
@@ -125,6 +127,22 @@ function drawCross() {
 	ctx.fillRect(0, -5, ((canvas.width / 2)), 10);
 	ctx.closePath();
 	ctx.restore();
+
+	ctx.save();
+	ctx.beginPath();
+	ctx.rotate((goalAngle - tolerance) * (Math.PI / 180));
+	ctx.fillStyle = "Green";
+	ctx.fillRect(0, -5, ((canvas.width / 2)), 10);
+	ctx.closePath();
+	ctx.restore();
+
+	ctx.save();
+	ctx.beginPath();
+	ctx.rotate((goalAngle + tolerance) * (Math.PI / 180));
+	ctx.fillStyle = "Green";
+	ctx.fillRect(0, -5, ((canvas.width / 2)), 10);
+	ctx.closePath();
+	ctx.restore();
 }
 
 function getMousePos(evt) {
@@ -140,7 +158,7 @@ function getMousePos(evt) {
 
 function handleMouseMove(event) {
 	// disable pick moving if lock is turning
-	if (!DEBUG && rightPressed) {
+	if (!DEBUG && lockRotation > 0) {
 		return;
 	}
 
@@ -191,6 +209,8 @@ function startGame(event) {
 	lockRotation = 0.0;
 	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
+
+	tolerance = Math.ceil((difficulty / 10) + 5);
 
 	gameLoop = setInterval(draw, 10);
 
