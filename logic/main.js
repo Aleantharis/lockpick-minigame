@@ -21,6 +21,12 @@ window.addEventListener("orientationchange", resizeCanvas);
 
 var pickAngle = 0.0;
 
+function clearCanvas() {
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.restore();
+}
+
 function drawDial() {
 	ctx.beginPath();
 	ctx.arc(0, 0, ((canvas.height / 2) * 0.8) / 2, 0, Math.PI * 2, false);
@@ -44,7 +50,10 @@ function drawPick() {
 }
 
 function draw() {
+	clearCanvas();
+
 	drawDial();
+	drawPick();
 }
 
 function drawCross() {
