@@ -19,3 +19,12 @@ body {
 	border: 1px solid black;
 	margin-bottom:10px;
 }
+
+.fMenu > * {
+	flex-grow:1;
+	margin-right: 10px;
+}
+
+.fMenu > label  {
+	margin-right: 0px;
+}

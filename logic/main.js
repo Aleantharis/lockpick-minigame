@@ -21,8 +21,8 @@ window.addEventListener("resize", resizeCanvas);
 window.addEventListener("orientationchange", resizeCanvas);
 
 
-function debugToggle(event) {
-	DEBUG = document.getElementById("DEBUG").value;
+function debugToggle() {
+	DEBUG = document.getElementById("cbDebug").checked;
 }
 window.addEventListener("change", debugToggle);
 
@@ -78,7 +78,6 @@ function drawCross() {
 	ctx.fill();
 	ctx.closePath();
 
-
 	ctx.beginPath();
 	ctx.fillRect(-5, -(canvas.height / 2), 10, canvas.height);
 	ctx.fillStyle = "Black";
@@ -126,6 +125,9 @@ function handleMouseMove(event) {
 	pickAngle = alphaDeg;
 	if (DEBUG) {
 		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg);
+	}
+	else {
+		document.getElementById("testOut").value = "";
 	}
 }
 
