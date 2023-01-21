@@ -2,6 +2,15 @@ var canvas = document.getElementById("cvGame");
 var ctx = canvas.getContext("2d");
 var gameLoop;
 
+resize_canvas();
+// Attempt at auto-resize
+function resize_canvas(){
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight - document.getElementById("fMenu").offsetHeight;
+}
+window.addEventListener("resize", resize_canvas);
+window.addEventListener("orientationchange", resize_canvas);
+
 // Move coordinate origin to center of canvas
 ctx.translate(canvas.width / 2, canvas.height / 2);
 
@@ -9,13 +18,13 @@ var pickAngle = 0.0;
 
 function drawDial() {
 	ctx.beginPath();
-	ctx.arc(0, 0, (canvas.height / 2) * 0.8, 0, Math.PI * 2, false);
+	ctx.arc(0, 0, ((canvas.height / 2) * 0.8) / 2, 0, Math.PI * 2, false);
 	ctx.fillStyle = "Black";
 	ctx.fill();
 	ctx.closePath();
 
 	ctx.beginPath();
-	ctx.arc(0, 0, (canvas.height / 2) * 0.6, 0, Math.PI * 2, false);
+	ctx.arc(0, 0, ((canvas.height / 2) * 0.6) / 2, 0, Math.PI * 2, false);
 	ctx.fillStyle = "White";
 	ctx.fill();
 	ctx.closePath();
@@ -75,7 +84,7 @@ function startGame(event) {
 
 
 
-//document.onmousemove = handleMouseMove;
+document.onmousemove = handleMouseMove;
 draw();
 
 
