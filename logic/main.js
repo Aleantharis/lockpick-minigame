@@ -34,8 +34,8 @@ function draw() {
 }
 
 function handleMouseMove(event) {
-	var transpX = event.x - (canvas.width / 2);
-	var transpY = event.y - (canvas.height / 2);
+	var transpX = event.x - (document.body.clientWidth / 2);
+	var transpY = event.y - (document.body.clientHeight / 2);
 
 	// alpha = arctan(a / b) -> arctan(y / x)
 
