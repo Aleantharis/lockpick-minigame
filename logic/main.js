@@ -12,6 +12,7 @@ function resizeCanvas() {
 
 	// Move coordinate origin to center of canvas
 	ctx.translate(canvas.width / 2, canvas.height / 2);
+	ctx.save();
 
 	drawCross();
 }
