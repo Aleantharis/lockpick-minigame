@@ -97,7 +97,7 @@ function drawDial() {
 		ctx.fill();
 	}
 	else {
-		ctx.drawImage(lockBody, -(canvas.width * 0.8) / 2, -(canvas.height * 0.8) / 2, canvas.width * 0.8, canvas.height * 0.8);
+		ctx.drawImage(lockBody, -(canvas.height * 0.8) / 2, -(canvas.height * 0.8) / 2, canvas.height * 0.8, canvas.height * 0.8);
 	}
 	ctx.closePath();
 
@@ -110,7 +110,7 @@ function drawDial() {
 	else {
 		ctx.save();
 		ctx.rotate((lockRotation - 90) * (Math.PI / 180));
-		ctx.drawImage(lockBody, -(canvas.width * 0.6) / 2, -(canvas.height * 0.6) / 2, canvas.width * 0.6, canvas.height * 0.6);
+		ctx.drawImage(lockCore, -(canvas.height * 0.6) / 2, -(canvas.height * 0.6) / 2, canvas.height * 0.6, canvas.height * 0.6);
 		ctx.restore();
 	}
 	ctx.closePath();
