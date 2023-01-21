@@ -1,13 +1,17 @@
 const canvasHeightMargin = 30;
+const lockRotationSpeed = 0.5;
+const maxPickHealth = 110;
 
 var DEBUG = true;
 var canvas = document.getElementById("cvGame");
 var ctx = canvas.getContext("2d");
 var gameLoop;
 var rightPressed = false;
+var difficulty = 0;
 var lockRotation = 0.0;
 var pickAngle = 0.0;
 var goalAngle = 0.0;
+var pickHealth = 100;
 
 resizeCanvas();
 
@@ -28,8 +32,12 @@ window.addEventListener("orientationchange", resizeCanvas);
 function debugToggle() {
 	DEBUG = document.getElementById("cbDebug").checked;
 }
-window.addEventListener("change", debugToggle);
+document.getElementById("cbDebug").addEventListener("change", debugToggle);
 
+function difficultyChange() {
+	difficulty = document.getElementById("sDiff").value;
+}
+document.getElementById("sDiff").addEventListener("change", difficultyChange);
 
 function keyDownHandler(event) {
 	if (event.key === "Right" || event.key === "ArrowRight" || event.key === "D" || event.key === "d") {
@@ -69,9 +77,9 @@ function drawDial() {
 
 	ctx.beginPath();
 	ctx.save();
-	ctx.rotate((lockRotation + 180) * (Math.PI / 180));
+	ctx.rotate((lockRotation - 90) * (Math.PI / 180));
 	ctx.fillStyle = "Red";
-	ctx.fillRect(-5, 0, 10, ((canvas.height / 2) * 0.6));
+	ctx.fillRect(0, -5, ((canvas.height / 2) * 0.6), 10);
 	ctx.restore();
 	ctx.closePath();
 }
@@ -114,7 +122,7 @@ function drawCross() {
 	ctx.beginPath();
 	ctx.rotate((goalAngle + 180) * (Math.PI / 180));
 	ctx.fillStyle = "Red";
-	ctx.fillRect(-5, 0, 10, ((canvas.width / 2)));
+	ctx.fillRect(0, -5, ((canvas.width / 2)), 10);
 	ctx.closePath();
 	ctx.restore();
 }
@@ -131,8 +139,10 @@ function getMousePos(evt) {
 }
 
 function handleMouseMove(event) {
-	// var transpX = event.x - (document.body.clientWidth / 2);
-	// var transpY = event.y - (document.body.clientHeight / 2);
+	// disable pick moving if lock is turning
+	if (!DEBUG && rightPressed) {
+		return;
+	}
 
 	var pos = getMousePos(event);          // get adjusted coordinates as above
 	var matrix = ctx.getTransform();         // W3C (future)
@@ -175,10 +185,11 @@ function stopGame(event) {
 
 function startGame(event) {
 	event.preventDefault();
-	console.log("difficulty: " + document.getElementById("sDiff").value);
-	
+	console.log("difficulty: " + difficulty);
+
 	// TODO setup new game (difficulty setting, randomize target etc.)
 	lockRotation = 0.0;
+	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
 
 	gameLoop = setInterval(draw, 10);
