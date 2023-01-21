@@ -1,8 +1,10 @@
 const canvasHeightMargin = 30;
 
+var DEBUG = true;
 var canvas = document.getElementById("cvGame");
 var ctx = canvas.getContext("2d");
 var gameLoop;
+
 
 resizeCanvas();
 // Attempt at auto-resize
@@ -12,7 +14,6 @@ function resizeCanvas() {
 
 	// Move coordinate origin to center of canvas
 	ctx.translate(canvas.width / 2, canvas.height / 2);
-	ctx.save();
 
 	drawCross();
 }
@@ -20,38 +21,51 @@ window.addEventListener("resize", resizeCanvas);
 window.addEventListener("orientationchange", resizeCanvas);
 
 
+function debugToggle(event) {
+	DEBUG = document.getElementById("DEBUG").value;
+}
+window.addEventListener("change", debugToggle);
+
 var pickAngle = 0.0;
 
 function clearCanvas() {
+	ctx.save();
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	//ctx.translate(canvas.width / 2, canvas.height / 2);
 	ctx.restore();
 }
 
 function drawDial() {
 	ctx.beginPath();
-	ctx.arc(0, 0, ((canvas.height / 2) * 0.8) / 2, 0, Math.PI * 2, false);
+	ctx.arc(0, 0, ((canvas.height / 2) * 0.8), 0, Math.PI * 2, false);
 	ctx.fillStyle = "Black";
 	ctx.fill();
 	ctx.closePath();
 
 	ctx.beginPath();
-	ctx.arc(0, 0, ((canvas.height / 2) * 0.6) / 2, 0, Math.PI * 2, false);
+	ctx.arc(0, 0, ((canvas.height / 2) * 0.6), 0, Math.PI * 2, false);
 	ctx.fillStyle = "White";
 	ctx.fill();
 	ctx.closePath();
 }
 
 function drawPick() {
+	ctx.save();
 	ctx.beginPath();
 	ctx.rotate(pickAngle * (Math.PI / 180));
 	ctx.fillStyle = "Gray";
-	ctx.fillRect(0, 0, 500, 30);
+	ctx.fillRect(0, -15, 500, 30);
 	ctx.closePath();
+	ctx.restore();
 }
 
 function draw() {
 	clearCanvas();
+
+	if (DEBUG) {
+		drawCross();
+	}
 
 	drawDial();
 	drawPick();
@@ -109,7 +123,10 @@ function handleMouseMove(event) {
 		alphaDeg = 360 - alphaDeg;
 	}
 
-	document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg);
+	pickAngle = alphaDeg;
+	if (DEBUG) {
+		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg);
+	}
 }
 
 function stopGame(event) {
