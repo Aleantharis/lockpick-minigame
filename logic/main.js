@@ -52,7 +52,7 @@ function handleMouseMove(event) {
 		alphaDeg += 270;
 	}
 
-	document.getElementById("testOut").value = alphaDeg;
+	//document.getElementById("testOut").value = alphaDeg;
 }
 
 function stopGame(event) {
@@ -76,7 +76,7 @@ function startGame(event) {
 
 
 document.onmousemove = handleMouseMove;
-//setInterval(draw, 10);
+setInterval(draw, 10);
 
 
-document.getElementById("fMenu").onsubmit = startGame;
+//document.getElementById("fMenu").onsubmit = startGame;
