@@ -71,6 +71,11 @@ div {
 
 
 
+.life > * {
+	margin:0px;
+	padding:0px;
+}
+
 .life {
     float: left;
     height: 46px;
@@ -90,7 +95,8 @@ div {
     color:#ccc;
 }
 .life:not(:checked) > label:before {
-    content: '★ ';
+    /*content: '★ ';*/
+	content: url('../img/lockpick.png');
 }
 .life > input:checked ~ label {
     color: #ffc700;    
