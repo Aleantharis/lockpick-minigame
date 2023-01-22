@@ -13,6 +13,14 @@ body {
 	width: 50vw;
 }
 
+output {
+	user-select: none;
+}
+
+.pnlDebug {
+	flex-direction: row-reverse;
+}
+
 .pnlDebug>output {
 	flex-grow: 99;
 }
