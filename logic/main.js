@@ -25,7 +25,7 @@ var difficulty = 0;
 var lockRotation = 0.0;
 var pickAngle = 0.0;
 var pickTranspScale = 0.12;
-var pickTranspX = 0.0;
+var pickTranspY = 0.0;
 var goalAngle = 0.0;
 var dmgTolerance = 0.0;
 var pickHealth = 100;
@@ -55,7 +55,7 @@ function resizeCanvas() {
 		canvasMinSize = canvas.height;
 	}
 
-	pickTranspX = -canvasMinSize * pickTranspScale;
+	pickTranspY = canvasMinSize * pickTranspScale;
 }
 window.addEventListener("resize", resizeCanvas);
 window.addEventListener("orientationchange", resizeCanvas);
@@ -169,7 +169,7 @@ function drawPick() {
 	}
 	else {
 		ctx.rotate(lockRotation * (Math.PI / 180));
-		ctx.translate(0, pickTranspX);
+		ctx.translate(0, -pickTranspY);
 		ctx.rotate(pickAngle * (Math.PI / 180));
 		var scaling = canvasMinSize / 900;
 		ctx.drawImage(lockPick, 0, -25 * scaling, 900 * scaling, 50 * scaling);
@@ -284,10 +284,6 @@ function handleMouseMove(event) {
 
 	var transpX = pos.x * imatrix.a + pos.y * imatrix.c + imatrix.e;
 	var transpY = pos.x * imatrix.b + pos.y * imatrix.d + imatrix.f;
-
-
-	//add pick transposition if pick has been transposed
-	transpX += pickTranspX;
 
 	// alpha = arctan(a / b) -> arctan(y / x)
 	var alphaRad = Math.atan(Math.abs(transpY) / Math.abs(transpX));
