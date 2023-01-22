@@ -70,11 +70,7 @@ div {
 	display: flex;
 }
 
-
-datalist {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	writing-mode: vertical-lr;
-	width: 200px;
+.livesIcon {
+	height:10%;
+	object-fit: scale-down;
 }

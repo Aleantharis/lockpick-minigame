@@ -28,7 +28,7 @@ var goalAngle = 0.0;
 var dmgTolerance = 0.0;
 var pickHealth = 100;
 var currMaxRotation = 0;
-var lifes = 1;
+var lives = 1;
 
 function imgLoaded(event) {
 	if(++loadedImgs >= 3) {
@@ -288,7 +288,7 @@ function failure() {
 	rightPressed = false;
 	pickHealth = maxPickHealth - difficulty;
 
-	if (--lifes == 0) {
+	if (--lives == 0) {
 		stopGame();
 		alert("You ran out of lockpicks!");
 	}
@@ -317,10 +317,18 @@ function stopGame() {
 	document.getElementById("fMenu").onsubmit = startGameHandler;
 }
 
+function renderLives() {
+	var out = "";
+	for (let index = 1; index < lives; index++) {
+		out += "<img src='img/lockpick.png' class='livesIcon'>";
+	}
+	document.getElementById("pnlLifesOut").innerHTML = out;
+}
+
 function startGame() {
 	console.log("difficulty: " + difficulty);
 
-	lifes = document.getElementById("inLifes").value;
+	lives = document.getElementById("inLifes").value;
 	lockRotation = 0.0;
 	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
@@ -331,7 +339,8 @@ function startGame() {
 
 	document.getElementById("sDiff").disabled = true;
 	document.getElementById("pnlLifesIn").classList.add("hidden");
-	document.getElementById("outLifes").value = lifes;
+	//document.getElementById("pnlLifesOut").value = lifes;
+	renderLives();
 	document.getElementById("pnlLifesOut").classList.remove("hidden");
 	document.getElementById("btnStart").value = "Stop";
 	document.getElementById("fMenu").onsubmit = stopGameHandler;
