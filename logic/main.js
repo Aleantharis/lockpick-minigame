@@ -97,7 +97,7 @@ function pointerDownHandler(event) {
 		rightPressed = true; 
 	}
 	else if (event.pointerType === "touch") {
-		if(event.touches.length > 1) {
+		if(!event.isPrimary) {
 			rightPressed = true;
 		}
 	}
