@@ -69,8 +69,3 @@ label, output {
 div {
 	display: flex;
 }
-
-.livesIcon {
-	height:10%;
-	object-fit: scale-down;
-}

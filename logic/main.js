@@ -318,10 +318,7 @@ function stopGame() {
 }
 
 function renderLives() {
-	var out = "";
-	for (let index = 1; index < lives; index++) {
-		out += "<img src='img/lockpick.png' class='livesIcon'>";
-	}
+	var out = "Lockpicks: " + lives;
 	document.getElementById("pnlLifesOut").innerHTML = out;
 }
 
@@ -339,7 +336,6 @@ function startGame() {
 
 	document.getElementById("sDiff").disabled = true;
 	document.getElementById("pnlLifesIn").classList.add("hidden");
-	//document.getElementById("pnlLifesOut").value = lifes;
 	renderLives();
 	document.getElementById("pnlLifesOut").classList.remove("hidden");
 	document.getElementById("btnStart").value = "Stop";
