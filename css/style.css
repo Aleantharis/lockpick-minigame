@@ -60,7 +60,7 @@ input {
 	text-align: center;
 }
 
-label, output {
+label, output, .pnlLivesOut {
 	color: white;
 	padding: 10px;
 	text-align: center;
