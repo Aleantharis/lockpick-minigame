@@ -108,6 +108,7 @@ function pointerUpHandler(event) {
 }
 canvas.addEventListener("pointerdown", pointerDownHandler, false);
 canvas.addEventListener("pointerup", pointerUpHandler, false);
+canvas.addEventListener("pointercancel", pointerUpHandler, false);
 
 function clearCanvas() {
 	// https://stackoverflow.com/a/6722031
