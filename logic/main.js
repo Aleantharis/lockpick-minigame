@@ -88,6 +88,22 @@ function keyUpHandler(event) {
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
+function pointerDownHandler(event) {
+	if(event.pointerType === "mouse") {
+		rightPressed = true; 
+	}
+	else if (event.pointerType === "touch") {
+		if(event.touches.length > 1) {
+			rightPressed = true;
+		}
+	}
+}
+
+function pointerUpHandler(event) {
+	rightPressed = false;
+}
+canvas.addEventListener("pointerdown", pointerDownHandler, false);
+canvas.addEventListener("pointerup", pointerUpHandler, false);
 
 function clearCanvas() {
 	// https://stackoverflow.com/a/6722031
@@ -351,7 +367,7 @@ function startGame() {
 	document.getElementById("fMenu").onsubmit = stopGameHandler;
 }
 
-document.onmousemove = handleMouseMove;
+document.onpointermove = handleMouseMove;
 document.getElementById("fMenu").onsubmit = startGameHandler;
 
 
