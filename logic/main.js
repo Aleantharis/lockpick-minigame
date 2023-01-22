@@ -29,6 +29,7 @@ var dmgTolerance = 0.0;
 var pickHealth = 100;
 var currMaxRotation = 0;
 var lives = 1;
+var canvasMinSize = 0;
 
 function imgLoaded(event) {
 	if(++loadedImgs >= 3) {
@@ -44,6 +45,13 @@ function resizeCanvas() {
 
 	// Move coordinate origin to center of canvas
 	ctx.translate(canvas.width / 2, canvas.height / 2);
+
+	if(canvas.width < canvas.height) {
+		canvasMinSize = canvas.width;
+	}
+	else {
+		canvasMinSize = canvas.height;
+	}
 }
 window.addEventListener("resize", resizeCanvas);
 window.addEventListener("orientationchange", resizeCanvas);
@@ -93,27 +101,27 @@ function drawDial() {
 	ctx.beginPath();
 	if (DEBUG) {
 		ctx.fillStyle = "Black";
-		ctx.arc(0, 0, ((canvas.height / 2) * 0.8), 0, Math.PI * 2, false);
+		ctx.arc(0, 0, ((canvasMinSize / 2) * 0.8), 0, Math.PI * 2, false);
 		ctx.fill();
 	}
 	else {
 		ctx.fillStyle = "Black";
-		ctx.arc(0, 0, ((canvas.height / 2) * 0.5), 0, Math.PI * 2, false);
+		ctx.arc(0, 0, ((canvasMinSize / 2) * 0.5), 0, Math.PI * 2, false);
 		ctx.fill();
-		ctx.drawImage(lockBody, -(canvas.height * 0.8) / 2, -(canvas.height * 0.8) / 2, canvas.height * 0.8, canvas.height * 0.8);
+		ctx.drawImage(lockBody, -(canvasMinSize * 0.8) / 2, -(canvasMinSize * 0.8) / 2, canvasMinSize * 0.8, canvasMinSize * 0.8);
 	}
 	ctx.closePath();
 
 	ctx.beginPath();
 	if (DEBUG) {
 		ctx.fillStyle = "White";
-		ctx.arc(0, 0, ((canvas.height / 2) * 0.6), 0, Math.PI * 2, false);
+		ctx.arc(0, 0, ((canvasMinSize / 2) * 0.6), 0, Math.PI * 2, false);
 		ctx.fill();
 	}
 	else {
 		ctx.save();
 		ctx.rotate((lockRotation) * (Math.PI / 180));
-		ctx.drawImage(lockCore, -(canvas.height * 0.8) / 2, -(canvas.height * 0.8) / 2, canvas.height * 0.8, canvas.height * 0.8);
+		ctx.drawImage(lockCore, -(canvasMinSize * 0.8) / 2, -(canvasMinSize * 0.8) / 2, canvasMinSize * 0.8, canvasMinSize * 0.8);
 		ctx.restore();
 	}
 	ctx.closePath();
@@ -123,10 +131,10 @@ function drawDial() {
 		ctx.save();
 		ctx.rotate((lockRotation - 90) * (Math.PI / 180));
 		ctx.fillStyle = "Black";
-		ctx.fillRect(-(canvas.height / 2) * 0.6, -5, canvas.height * 0.6, 10);
-		ctx.fillRect(-5, -(canvas.height / 2) * 0.6, 10, canvas.height * 0.6);
+		ctx.fillRect(-(canvasMinSize / 2) * 0.6, -5, canvasMinSize * 0.6, 10);
+		ctx.fillRect(-5, -(canvasMinSize / 2) * 0.6, 10, canvasMinSize * 0.6);
 		ctx.fillStyle = "Red";
-		ctx.fillRect(0, -5, ((canvas.height / 2) * 0.6), 10);
+		ctx.fillRect(0, -5, ((canvasMinSize / 2) * 0.6), 10);
 		ctx.restore();
 		ctx.closePath();
 	}
@@ -141,9 +149,9 @@ function drawPick() {
 	}
 	else {
 		ctx.rotate(lockRotation * (Math.PI / 180));
-		ctx.translate(0, -canvas.height * 0.12);
+		ctx.translate(0, -canvasMinSize * 0.12);
 		ctx.rotate(pickAngle * (Math.PI / 180));
-		var scaling = canvas.height / 900;
+		var scaling = canvasMinSize / 900;
 		ctx.drawImage(lockPick, 0, -25 * scaling, 900 * scaling, 50 * scaling);
 	}
 	ctx.restore();
