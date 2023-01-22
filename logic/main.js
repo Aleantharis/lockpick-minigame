@@ -293,6 +293,7 @@ function failure() {
 		alert("You ran out of lockpicks!");
 	}
 	else {
+		renderLives();
 		alert("Your lockpick broke!");
 	}
 }
