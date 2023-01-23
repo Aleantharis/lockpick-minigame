@@ -29,6 +29,7 @@ function initAssets() {
 		assets[opt.value] = tmp;
 	});
 }
+initAssets();
 
 var DEBUG = false;
 var canvas = document.getElementById("cvGame");
