@@ -45,7 +45,7 @@ var pickHealth = 100;
 var currMaxRotation = 0;
 var lives = 1;
 var canvasMinSize = 0;
-var currentTheme = "";
+var currentTheme = defaultTheme;
 
 
 function imgLoaded(event) {
