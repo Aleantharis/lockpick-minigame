@@ -44,7 +44,7 @@ var rightPressed = false;
 var difficulty = 0;
 var lockRotation = 0.0;
 var pickAngle = 0.0;
-var pickTranspScale = 0.12;
+var pickTranspScale = 0.14;
 var pickTranspY = 0.0;
 var goalAngle = 0.0;
 var dmgTolerance = 0.0;
@@ -361,6 +361,7 @@ function stopGame() {
 	clearInterval(gameLoop);
 	rightPressed = false;
 	document.getElementById("sDiff").disabled = false;
+	document.getElementById("sTheme").disabled = false;
 	document.getElementById("pnlLivesIn").classList.remove("hidden");
 	document.getElementById("pnlLivesOut").classList.add("hidden");
 	document.getElementById("btnStart").value = "Start";
@@ -386,6 +387,7 @@ function startGame() {
 	gameLoop = setInterval(draw, 10);
 
 	document.getElementById("sDiff").disabled = true;
+	document.getElementById("sTheme").disabled = true;
 	document.getElementById("pnlLivesIn").classList.add("hidden");
 	renderLives();
 	document.getElementById("pnlLivesOut").classList.remove("hidden");
