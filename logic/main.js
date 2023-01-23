@@ -11,7 +11,7 @@ const assets = {};
 var imgLoading = 0;
 const imgLoaded = () => --imgLoading === 0 && (document.getElementById("btnStart").disabled = false);
 function initAssets() {
-	document.getElementById("sTheme").options.forEach(opt => {
+	[...document.getElementById("sTheme").options].forEach(opt => {
 		const core = new Image();
 		core.src = "img/" + opt.value + "/lock-core.png";
 		imgLoading++;
