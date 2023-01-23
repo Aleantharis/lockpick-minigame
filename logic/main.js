@@ -37,6 +37,7 @@ function initAssets() {
 initAssets();
 
 var DEBUG = false;
+var debugOutput = "";
 var canvas = document.getElementById("cvGame");
 var ctx = canvas.getContext("2d");
 var gameLoop;
@@ -69,7 +70,7 @@ function resizeCanvas() {
 	// Move coordinate origin to center of canvas
 	ctx.translate(canvas.width / 2, canvas.height / 2);
 
-	if(canvas.width < canvas.height) {
+	if (canvas.width < canvas.height) {
 		canvasMinSize = canvas.width;
 	}
 	else {
@@ -114,11 +115,11 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 function pointerDownHandler(event) {
-	if(event.pointerType === "mouse") {
-		rightPressed = true; 
+	if (event.pointerType === "mouse") {
+		rightPressed = true;
 	}
 	else if (event.pointerType === "touch") {
-		if(!event.isPrimary) {
+		if (!event.isPrimary) {
 			rightPressed = true;
 		}
 	}
@@ -184,7 +185,7 @@ function drawDial() {
 
 function drawPick() {
 	ctx.save();
-	if(DEBUG) {
+	if (DEBUG) {
 		ctx.rotate(pickAngle * (Math.PI / 180));
 		ctx.fillStyle = "Gray";
 		ctx.fillRect(0, -15, 500, 30);
@@ -280,6 +281,11 @@ function drawCross() {
 	ctx.fillRect(0, -2, ((canvas.width / 2)), 4);
 	ctx.closePath();
 	ctx.restore();
+
+	ctx.font = Math.floor(canvas.height * 0.1) + "px sans-serif";
+	ctx.fillStyle = "White"
+	ctx.textBaseline = "bottom";
+	ctx.fillText(debugOutput, -canvas.width / 2, canvas.width, canvas.width / 2);
 }
 
 function getMousePos(evt) {
@@ -323,10 +329,9 @@ function handleMouseMove(event) {
 
 	pickAngle = alphaDeg;
 	currMaxRotation = getCurrentMaxRotation();
-	
+
 	if (DEBUG) {
-		// TODO, draw debug values inside canvas
-		//document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot: " + Math.floor(currMaxRotation) + " | dmgTolerance: " + dmgTolerance + " | vic: " + vicTolerance;
+		debugOutput = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot: " + Math.floor(currMaxRotation) + " | dmgTolerance: " + dmgTolerance + " | vic: " + vicTolerance;
 	}
 }
 
