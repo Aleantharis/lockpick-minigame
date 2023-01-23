@@ -18,10 +18,11 @@ body.modern {
 	display: inline-block;
 }
 
-.fMenu {	
+.fMenu {
 	display: flex;
 	flex-direction: row;
-	width: 50vw;
+	/* width: 50vw; */
+	width: 100%;
 }
 
 output {
@@ -29,11 +30,12 @@ output {
 }
 
 .fMenu {
-	flex-grow: 1;
+	/* flex-grow: 1; */
 	max-height: 10%;
 	margin-bottom: 10px;
 	display: inline-flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .cvGame {
@@ -67,7 +69,7 @@ input {
 	border: 1px solid white;
 	border-radius: 5px;
 	color: white;
-	padding: 10px;
+	/* padding: 10px; */
 	text-align: center;
 }
 
