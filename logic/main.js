@@ -134,8 +134,10 @@ function pointerUpHandler(event) {
 			if (point.pointer_id == event.pointerId)
 				return true;
 		});
-		touchPoints.splice(index, 1);
-
+		if(index >= 0) {
+			touchPoints.splice(index, 1);
+		}
+		
 		if (touchPoints.length < 2) {
 			rightPressed = false;
 		}
