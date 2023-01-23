@@ -8,12 +8,9 @@ const goalRotation = 90;
 const defaultTheme = document.getElementById("sTheme").value;
 
 const assets = {};
-const lockPick = new Image();
 var imgLoading = 0;
 const imgLoaded = () => --imgLoading === 0 && (document.getElementById("btnStart").disabled = false);
 function initAssets() {
-	lockPick.src = "img/lockpick-2.png";
-	lockPick.onload = imgLoaded;
 
 	[...document.getElementById("sTheme").options].forEach(opt => {
 		const core = new Image();
@@ -24,10 +21,14 @@ function initAssets() {
 		body.src = "img/" + opt.value + "/lock-ring.png";
 		imgLoading++;
 		body.onload = imgLoaded;
+		const lockPick = new Image();
+		lockPick.src = "img/" + opt.value + "/lockpick.png";
+		lockPick.onload = imgLoaded;
 
 		const tmp = {
 			lockCore: core,
-			lockBody: body
+			lockBody: body,
+			lockPick: lockPick
 		};
 
 		assets[opt.value] = tmp;
@@ -193,7 +194,7 @@ function drawPick() {
 		ctx.translate(0, -pickTranspY);
 		ctx.rotate(pickAngle * (Math.PI / 180));
 		var scaling = canvasMinSize / 900;
-		ctx.drawImage(lockPick, 0, -25 * scaling, 900 * scaling, 50 * scaling);
+		ctx.drawImage(assets[currentTheme].lockPick, 0, -25 * scaling, 900 * scaling, 50 * scaling);
 	}
 	ctx.restore();
 }
@@ -399,6 +400,3 @@ document.getElementById("sTheme").onchange = themeChangeHandler;
 
 //set default theme background
 document.body.classList.add(defaultTheme);
-
-// TODO: print images instead of rectangles for lockpicky feeling - maybe tweak numbers for balancing
-// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
