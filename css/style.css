@@ -2,15 +2,16 @@ body {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
-	background-size: contain;
 }
 
 body.cyberpunk {
 	background: url('../img/cyberpunk/background.jpg');
+	background-size: contain;
 }
 
 body.modern {
 	background: url('../img/modern/background.jpg');
+	background-size: contain;
 }
 
 .fMenu,

@@ -55,7 +55,9 @@ function imgLoaded(event) {
 }
 
 function themeChangeHandler(event) {
+	document.body.classList.remove(currentTheme);
 	currentTheme = document.getElementById("sTheme").value ?? defaultTheme;
+	document.body.classList.add(currentTheme);
 }
 
 resizeCanvas();
@@ -125,9 +127,9 @@ function pointerDownHandler(event) {
 function pointerUpHandler(event) {
 	rightPressed = false;
 }
-canvas.addEventListener("pointerdown", pointerDownHandler, false);
-canvas.addEventListener("pointerup", pointerUpHandler, false);
-canvas.addEventListener("pointercancel", pointerUpHandler, false);
+//canvas.addEventListener("pointerdown", pointerDownHandler, false);
+//canvas.addEventListener("pointerup", pointerUpHandler, false);
+//canvas.addEventListener("pointercancel", pointerUpHandler, false);
 
 function clearCanvas() {
 	// https://stackoverflow.com/a/6722031
