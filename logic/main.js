@@ -130,14 +130,11 @@ function pointerDownHandler(event) {
 
 function pointerUpHandler(event) {
 	if (event.pointerType === "touch") {
-		var index = touchPoints.findIndex(function (point, index) {
-			if (point.pointer_id == event.pointerId)
-				return true;
-		});
+		var index = touchPoints.indexOf(event.pointerId);
 		if(index >= 0) {
 			touchPoints.splice(index, 1);
 		}
-		
+
 		if (touchPoints.length < 2) {
 			rightPressed = false;
 		}
