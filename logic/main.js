@@ -364,8 +364,7 @@ function stopGame() {
 	rightPressed = false;
 	document.getElementById("sDiff").disabled = false;
 	document.getElementById("sTheme").disabled = false;
-	document.getElementById("pnlLivesIn").classList.remove("hidden");
-	document.getElementById("pnlLivesOut").classList.add("hidden");
+	document.getElementById("inLives").disabled = false;
 	document.getElementById("btnStart").value = "Start";
 	document.getElementById("fMenu").onsubmit = startGameHandler;
 	canvas.classList.remove("noCrsr");
@@ -395,9 +394,8 @@ function startGame() {
 
 	document.getElementById("sDiff").disabled = true;
 	document.getElementById("sTheme").disabled = true;
-	document.getElementById("pnlLivesIn").classList.add("hidden");
+	document.getElementById("inLives").disabled = true;
 	renderLives();
-	document.getElementById("pnlLivesOut").classList.remove("hidden");
 	document.getElementById("btnStart").value = "Stop";
 	document.getElementById("fMenu").onsubmit = stopGameHandler;
 	canvas.classList.add("noCrsr");
