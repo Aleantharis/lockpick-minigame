@@ -323,8 +323,10 @@ function handleMouseMove(event) {
 
 	pickAngle = alphaDeg;
 	currMaxRotation = getCurrentMaxRotation();
+	
 	if (DEBUG) {
-		document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot: " + Math.floor(currMaxRotation) + " | dmgTolerance: " + dmgTolerance + " | vic: " + vicTolerance;
+		// TODO, draw debug values inside canvas
+		//document.getElementById("testOut").value = "X: " + Math.floor(transpX) + " | Y: " + Math.floor(transpY) + " | alpha: " + Math.floor(alphaDeg) + " | lock: " + lockRotation + " | goal: " + goalAngle + " | maxRot: " + Math.floor(currMaxRotation) + " | dmgTolerance: " + dmgTolerance + " | vic: " + vicTolerance;
 	}
 }
 
@@ -369,15 +371,20 @@ function stopGame() {
 	canvas.classList.remove("noCrsr");
 }
 
+function livesInputChangeHandler(event) {
+	lives = document.getElementById("inLives").value;
+	renderLives();
+}
+
 function renderLives() {
 	var out = "Lockpicks: " + lives;
-	document.getElementById("pnlLivesOut").innerHTML = out;
+	document.getElementById("lblLives").innerHTML = out;
 }
 
 function startGame() {
 	console.log("difficulty: " + difficulty);
 
-	lives = document.getElementById("inLifes").value;
+	lives = document.getElementById("inLives").value;
 	lockRotation = 0.0;
 	pickHealth = maxPickHealth - difficulty;
 	goalAngle = Math.floor(Math.random() * 360);
@@ -399,6 +406,7 @@ function startGame() {
 document.onpointermove = handleMouseMove;
 document.getElementById("fMenu").onsubmit = startGameHandler;
 document.getElementById("sTheme").onchange = themeChangeHandler;
+document.getElementById("inLives").onchange = livesInputChangeHandler;
 
 //set default theme background
 document.body.classList.add(defaultTheme);

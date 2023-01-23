@@ -14,8 +14,11 @@ body.modern {
 	background-size: contain;
 }
 
-.fMenu,
-.pnlDebug {	
+.pnlMenu {
+	display: inline-block;
+}
+
+.fMenu {	
 	display: flex;
 	flex-direction: row;
 	width: 50vw;
@@ -25,23 +28,11 @@ output {
 	user-select: none;
 }
 
-.pnlDebug {
-	flex-direction: row-reverse;
-}
-
-.pnlDebug>output {
-	flex-grow: 99;
-}
-
-.pnlDebug>checkbox{
-	flex-grow:1;
-}
-
 .fMenu {
 	flex-grow: 1;
 	max-height: 10%;
 	margin-bottom: 10px;
-	display: flex;
+	display: inline-flex;
 	flex-direction: row;
 }
 
@@ -80,12 +71,17 @@ input {
 	text-align: center;
 }
 
-label, output, .pnlLivesOut {
+label, output {
 	color: white;
 	padding: 10px;
 	text-align: center;
 }
 
-div {
-	display: flex;
+.pnlLivesIn {
+    display: inline-flex;
+    flex-direction: column;
+    border: 1px solid white;
+    border-radius: 5px;
+    background: #00000099;
+	text-align: center;
 }

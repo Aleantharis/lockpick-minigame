@@ -24,20 +24,23 @@
 				<option value="75">Expert</option>
 				<option value="100">Master</option>
 			</select>
-			<div id="pnlLivesIn">
-				<label for="inLifes">Lockpicks: </label>
-				<input type="number" id="inLifes" min="1" max="10" step="1" value="1">
-			</div>
-			<div id="pnlLivesOut" class="pnlLivesOut hidden">
-				
+			<div id="pnlLives" class="pnlLives">
+				<label for="inLives" id="lblLives">Lockpicks: </label>
+				<input type="range" id="inLives" min="1" max="10" step="1" value="1">
+				<datalist>
+					<option value="1"></option>
+					<option value="3"></option>
+					<option value="5"></option>
+					<option value="7"></option>
+					<option value="10"></option>
+				</datalist>
 			</div>
 			<input type="submit" value="Start" id="btnStart" disabled>
 		</form>
-		<div id="pnlDebug" class="pnlDebug">
+		<!-- <div id="pnlDebug" class="pnlDebug">
 			<output id="testOut"></output>
 			<input type="checkbox" id="cbDebug" value="DEBUG" name="DEBUG">
-			<!-- <label for="cbDebug">DEBUG</label> -->
-		</div>
+		</div> -->
 	</div>
 	<canvas id="cvGame" class="cvGame"></canvas>
 </body>
