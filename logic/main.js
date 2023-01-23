@@ -8,9 +8,13 @@ const goalRotation = 90;
 const defaultTheme = document.getElementById("sTheme").value;
 
 const assets = {};
+const lockPick = new Image();
 var imgLoading = 0;
 const imgLoaded = () => --imgLoading === 0 && (document.getElementById("btnStart").disabled = false);
 function initAssets() {
+	lockPick.src = "img/lockpick-2.png";
+	lockPick.onload = imgLoaded;
+
 	[...document.getElementById("sTheme").options].forEach(opt => {
 		const core = new Image();
 		core.src = "img/" + opt.value + "/lock-core.png";
