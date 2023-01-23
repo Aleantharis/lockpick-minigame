@@ -389,6 +389,11 @@ function stopGame() {
 	document.getElementById("btnStart").value = "Start";
 	document.getElementById("fMenu").onsubmit = startGameHandler;
 	canvas.classList.remove("noCrsr");
+
+	// clear out touchpoints 
+	if(touchPoints.length > 0) {
+		touchPoints = [];
+	}
 }
 
 function livesInputChangeHandler(event) {
