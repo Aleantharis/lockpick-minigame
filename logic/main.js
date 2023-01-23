@@ -406,7 +406,7 @@ function startGame() {
 document.onpointermove = handleMouseMove;
 document.getElementById("fMenu").onsubmit = startGameHandler;
 document.getElementById("sTheme").onchange = themeChangeHandler;
-document.getElementById("inLives").onchange = livesInputChangeHandler;
+document.getElementById("inLives").oninput = livesInputChangeHandler;
 
 //set default theme background
 document.body.classList.add(defaultTheme);
