@@ -114,19 +114,35 @@ function keyUpHandler(event) {
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
+var touchPoints = [];
 function pointerDownHandler(event) {
 	if (event.pointerType === "mouse") {
 		rightPressed = true;
 	}
 	else if (event.pointerType === "touch") {
-		if (!event.isPrimary) {
+		touchPoints.push(event.pointerId);
+
+		if (touchPoints.length === 2) {
 			rightPressed = true;
 		}
 	}
 }
 
 function pointerUpHandler(event) {
-	rightPressed = false;
+	if (event.pointerType === "touch") {
+		var index = touchPoints.findIndex(function (point, index) {
+			if (point.pointer_id == e.pointerId)
+				return true;
+		});
+		touchPoints.splice(index, 1);
+
+		if (touchPoints.length < 2) {
+			rightPressed = false;
+		}
+	}
+	else {
+		rightPressed = false;
+	}
 }
 canvas.addEventListener("pointerdown", pointerDownHandler, false);
 canvas.addEventListener("pointerup", pointerUpHandler, false);
@@ -285,7 +301,7 @@ function drawCross() {
 	ctx.font = Math.floor(canvasMinSize * 0.05) + "px Segoe UI";
 	ctx.fillStyle = "White"
 	ctx.textBaseline = "bottom";
-	ctx.fillText(debugOutput, -canvas.width / 2 *0.98, canvas.height/2 * 0.98, canvas.width * 0.8);
+	ctx.fillText(debugOutput, -canvas.width / 2 * 0.98, canvas.height / 2 * 0.98, canvas.width * 0.8);
 }
 
 function getMousePos(evt) {
