@@ -85,12 +85,12 @@ window.addEventListener("orientationchange", resizeCanvas);
 function debugToggle() {
 	DEBUG = document.getElementById("cbDebug").checked;
 
-	if (DEBUG) {
-		document.getElementById("testOut").classList.remove("hidden");
-	}
-	else {
-		document.getElementById("testOut").classList.add("hidden");
-	}
+	// if (DEBUG) {
+	// 	document.getElementById("testOut").classList.remove("hidden");
+	// }
+	// else {
+	// 	document.getElementById("testOut").classList.add("hidden");
+	// }
 }
 document.getElementById("cbDebug").addEventListener("change", debugToggle);
 
