@@ -36,6 +36,9 @@ output {
 	display: inline-flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	/* margin-right: 10px; */
+	/* margin-bottom: 10px; */
+	/* flex: 1 0 auto; */
 }
 
 .cvGame {
@@ -51,8 +54,11 @@ output {
 }
 
 .fMenu>* {
-	flex-grow: 1;
+	flex-grow: 10;
 	margin-right: 10px;
+	/* flex: 1 0 auto; */
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 .fMenu>label {
@@ -86,4 +92,8 @@ label, output {
     border-radius: 5px;
     background: #00000099;
 	text-align: center;
+}
+
+.cbDebug {
+	flex-grow:1;
 }
