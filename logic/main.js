@@ -5,16 +5,29 @@ const minTolerance = 5;
 const vicTolerance = 0.25;
 const minRotation = 2;
 const goalRotation = 90;
-const lockBody = new Image();
-var loadedImgs = 0;
-lockBody.src = "img/lock-ring.png";
-lockBody.onload = imgLoaded;
-const lockCore = new Image();
-lockCore.src = "img/lock-core.png";
-lockCore.onload = imgLoaded;
-const lockPick = new Image();
-lockPick.src = "img/lockpick-2.png";
-lockPick.onload = imgLoaded;
+const defaultTheme = document.getElementById("sTheme").value;
+
+const assets = {};
+var imgLoading = 0;
+function initAssets() {
+	document.getElementById("sTheme").options.forEach(opt => {
+		const core = new Image();
+		core.src = "img/" + opt.value + "/lock-core.png";
+		imgLoading++;
+		core.onload = imgLoaded;
+		const body = new Image();
+		body.src = "img/" + opt.value + "/lock-ring.png";
+		imgLoading++;
+		body.onload = imgLoaded;
+
+		const tmp = {
+			lockCore: core,
+			lockBody: body
+		};
+
+		assets[opt.value] = tmp;
+	});
+}
 
 var DEBUG = false;
 var canvas = document.getElementById("cvGame");
@@ -32,11 +45,17 @@ var pickHealth = 100;
 var currMaxRotation = 0;
 var lives = 1;
 var canvasMinSize = 0;
+var currentTheme = "";
+
 
 function imgLoaded(event) {
-	if(++loadedImgs >= 3) {
+	if(--imgLoading <= 0) {
 		document.getElementById("btnStart").disabled = false;
 	}
+}
+
+function themeChangeHandler(event) {
+	currentTheme = document.getElementById("sTheme").value ?? defaultTheme;
 }
 
 resizeCanvas();
@@ -129,7 +148,7 @@ function drawDial() {
 		ctx.fillStyle = "Black";
 		ctx.arc(0, 0, ((canvasMinSize / 2) * 0.5), 0, Math.PI * 2, false);
 		ctx.fill();
-		ctx.drawImage(lockBody, -(canvasMinSize * 0.8) / 2, -(canvasMinSize * 0.8) / 2, canvasMinSize * 0.8, canvasMinSize * 0.8);
+		ctx.drawImage(assets[currentTheme].lockBody, -(canvasMinSize * 0.8) / 2, -(canvasMinSize * 0.8) / 2, canvasMinSize * 0.8, canvasMinSize * 0.8);
 	}
 	ctx.closePath();
 
@@ -142,7 +161,7 @@ function drawDial() {
 	else {
 		ctx.save();
 		ctx.rotate((lockRotation) * (Math.PI / 180));
-		ctx.drawImage(lockCore, -(canvasMinSize * 0.8) / 2, -(canvasMinSize * 0.8) / 2, canvasMinSize * 0.8, canvasMinSize * 0.8);
+		ctx.drawImage(assets[currentTheme].lockCore, -(canvasMinSize * 0.8) / 2, -(canvasMinSize * 0.8) / 2, canvasMinSize * 0.8, canvasMinSize * 0.8);
 		ctx.restore();
 	}
 	ctx.closePath();
@@ -375,7 +394,10 @@ function startGame() {
 
 document.onpointermove = handleMouseMove;
 document.getElementById("fMenu").onsubmit = startGameHandler;
+document.getElementById("sTheme").onchange = themeChangeHandler;
 
+//set default theme background
+document.body.classList.add(defaultTheme);
 
 // TODO: print images instead of rectangles for lockpicky feeling - maybe tweak numbers for balancing
 // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage

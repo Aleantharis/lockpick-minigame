@@ -2,8 +2,15 @@ body {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
-	background: url('../img/background.jpg');
 	background-size: contain;
+}
+
+body.cyberpunk {
+	background: url('../img/cyberpunk/background.jpg');
+}
+
+body.modern {
+	background: url('../img/modern/background.jpg');
 }
 
 .fMenu,
