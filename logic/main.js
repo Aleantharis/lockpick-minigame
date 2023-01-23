@@ -9,6 +9,7 @@ const defaultTheme = document.getElementById("sTheme").value;
 
 const assets = {};
 var imgLoading = 0;
+const imgLoaded = () => --imgLoading === 0 && (document.getElementById("btnStart").disabled = false);
 function initAssets() {
 	document.getElementById("sTheme").options.forEach(opt => {
 		const core = new Image();
@@ -46,13 +47,6 @@ var currMaxRotation = 0;
 var lives = 1;
 var canvasMinSize = 0;
 var currentTheme = defaultTheme;
-
-
-function imgLoaded(event) {
-	if(--imgLoading <= 0) {
-		document.getElementById("btnStart").disabled = false;
-	}
-}
 
 function themeChangeHandler(event) {
 	document.body.classList.remove(currentTheme);
@@ -127,9 +121,9 @@ function pointerDownHandler(event) {
 function pointerUpHandler(event) {
 	rightPressed = false;
 }
-//canvas.addEventListener("pointerdown", pointerDownHandler, false);
-//canvas.addEventListener("pointerup", pointerUpHandler, false);
-//canvas.addEventListener("pointercancel", pointerUpHandler, false);
+canvas.addEventListener("pointerdown", pointerDownHandler, false);
+canvas.addEventListener("pointerup", pointerUpHandler, false);
+canvas.addEventListener("pointercancel", pointerUpHandler, false);
 
 function clearCanvas() {
 	// https://stackoverflow.com/a/6722031
