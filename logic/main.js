@@ -131,7 +131,7 @@ function pointerDownHandler(event) {
 function pointerUpHandler(event) {
 	if (event.pointerType === "touch") {
 		var index = touchPoints.findIndex(function (point, index) {
-			if (point.pointer_id == e.pointerId)
+			if (point.pointer_id == event.pointerId)
 				return true;
 		});
 		touchPoints.splice(index, 1);
