@@ -1,4 +1,4 @@
-import { MersenneTwister } from "./MersenneTwister";
+import { MersenneTwister } from "./MersenneTwister.js";
 
 const canvasHeightMargin = 30;
 const lockRotationSpeed = 0.5;
