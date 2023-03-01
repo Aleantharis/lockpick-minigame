@@ -1,3 +1,5 @@
+import { MersenneTwister } from "./MersenneTwister";
+
 const canvasHeightMargin = 30;
 const lockRotationSpeed = 0.5;
 const maxPickHealth = 110;
