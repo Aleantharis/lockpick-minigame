@@ -54,6 +54,8 @@ var currMaxRotation = 0;
 var lives = 1;
 var canvasMinSize = 0;
 var currentTheme = defaultTheme;
+var mSeed = new Date().getTime();
+var mRand;
 
 var keepControlsLocked = false;
 
@@ -115,7 +117,7 @@ function keyUpHandler(event) {
 
 	// create shortcut to copy url to clipboard
 	if( event.key === "k" || event.key === "K") {
-		url.search = `d=${difficulty}&t=${currentTheme}&l=${lives}`;
+		url.search = `d=${difficulty}&t=${currentTheme}&l=${lives}&s=${mSeed}`;
 		if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
     		console.log(navigator.clipboard.writeText(url.href));
 		}
@@ -427,7 +429,13 @@ function startGame() {
 	lives = document.getElementById("inLives").value;
 	lockRotation = 0.0;
 	pickHealth = maxPickHealth - difficulty;
-	goalAngle = Math.floor(Math.random() * 360);
+	
+	// init random generator 
+	if(!mRand) {
+		mRand = new MersenneTwister(mSeed);
+	}
+	//goalAngle = Math.floor(Math.random() * 360);
+	goalAngle = Math.floor(mRand.genrand_real1() * 360);
 
 	dmgTolerance = Math.ceil(((100 - difficulty) / 2.5) + minTolerance);
 
@@ -469,4 +477,6 @@ if(url.search) {
 
 	document.getElementById("inLives").value = url.searchParams.has("l") ? url.searchParams.get("l") : lives;
 	livesInputChangeHandler();
+
+	mSeed = url.searchParams.has("s") ? url.searchParams.get("s") : mSeed;
 }
