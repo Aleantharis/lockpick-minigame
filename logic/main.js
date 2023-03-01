@@ -470,6 +470,7 @@ if(url.search) {
 	document.getElementById("sDiff").disabled = true;
 	document.getElementById("sTheme").disabled = true;
 	document.getElementById("inLives").disabled = true;
+	document.getElementById("cbDebug").style.visibility = "hidden";
 	
 	document.getElementById("sDiff").value = url.searchParams.has("d") ? url.searchParams.get("d") : difficulty;
 	difficultyChange();
@@ -479,6 +480,9 @@ if(url.search) {
 
 	document.getElementById("inLives").value = url.searchParams.has("l") ? url.searchParams.get("l") : lives;
 	livesInputChangeHandler();
+
+	document.getElementById("cbDebug").checked = url.searchParams.has("DEBUG") ? true : false;
+	debugToggle();
 
 	mSeed = url.searchParams.has("s") ? url.searchParams.get("s") : mSeed;
 }
