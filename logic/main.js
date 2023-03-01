@@ -55,6 +55,8 @@ var lives = 1;
 var canvasMinSize = 0;
 var currentTheme = defaultTheme;
 
+var keepControlsLocked = false;
+
 function themeChangeHandler(event) {
 	document.body.classList.remove(currentTheme);
 	currentTheme = document.getElementById("sTheme").value ?? defaultTheme;
@@ -109,6 +111,17 @@ function keyDownHandler(event) {
 function keyUpHandler(event) {
 	if (event.key === "Right" || event.key === "ArrowRight" || event.key === "D" || event.key === "d") {
 		rightPressed = false;
+	}
+
+	// create shortcut to copy url to clipboard
+	if( event.key === "k" || event.key === "K") {
+		url.search = `d=${difficulty}&t=${currentTheme}&l=${lives}`;
+		if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+    		console.log(navigator.clipboard.writeText(url.href));
+		}
+		else {
+			console.log("clipboard unavailable");
+		}
 	}
 }
 document.addEventListener("keydown", keyDownHandler, false);
@@ -382,9 +395,12 @@ function startGameHandler(event) {
 function stopGame() {
 	clearInterval(gameLoop);
 	rightPressed = false;
-	document.getElementById("sDiff").disabled = false;
-	document.getElementById("sTheme").disabled = false;
-	document.getElementById("inLives").disabled = false;
+
+	if(!keepControlsLocked) {
+		document.getElementById("sDiff").disabled = false;
+		document.getElementById("sTheme").disabled = false;
+		document.getElementById("inLives").disabled = false;
+	}
 	document.getElementById("btnStart").value = "Start";
 	document.getElementById("fMenu").onsubmit = startGameHandler;
 	canvas.classList.remove("noCrsr");
@@ -417,9 +433,11 @@ function startGame() {
 
 	gameLoop = setInterval(draw, 10);
 
-	document.getElementById("sDiff").disabled = true;
-	document.getElementById("sTheme").disabled = true;
-	document.getElementById("inLives").disabled = true;
+	if(!keepControlsLocked) {
+		document.getElementById("sDiff").disabled = true;
+		document.getElementById("sTheme").disabled = true;
+		document.getElementById("inLives").disabled = true;
+	}
 	renderLives();
 	document.getElementById("btnStart").value = "Stop";
 	document.getElementById("fMenu").onsubmit = stopGameHandler;
@@ -433,3 +451,22 @@ document.getElementById("inLives").oninput = livesInputChangeHandler;
 
 //set default theme background
 document.body.classList.add(defaultTheme);
+
+// read url params, if all is present -> lock inputs and prevent unlocking
+const url = new URL(window.location.href);
+if(url.search) {
+	keepControlsLocked = true;
+	
+	document.getElementById("sDiff").disabled = true;
+	document.getElementById("sTheme").disabled = true;
+	document.getElementById("inLives").disabled = true;
+	
+	document.getElementById("sDiff").value = url.searchParams.has("d") ? url.searchParams.get("d") : difficulty;
+	difficultyChange();
+
+	document.getElementById("sTheme").value = url.searchParams.has("t") ? url.searchParams.get("t") : currentTheme;
+	themeChangeHandler();
+
+	document.getElementById("inLives").value = url.searchParams.has("l") ? url.searchParams.get("l") : lives;
+	livesInputChangeHandler();
+}
